@@ -1,3 +1,7 @@
-<footer class="bg-white border-t border-gray-200 p-4 text-center text-gray-600 text-sm">
-	&copy; {{ date('Y') }} Undangan System. All rights reserved.
+<footer class="py-4 bg-light mt-auto border-top">
+	<div class="container-fluid px-4">
+		<div class="d-flex align-items-center justify-content-between small">
+			<div class="text-muted">Copyright &copy; UndanganKita {{ date('Y') }}</div>
+		</div>
+	</div>
 </footer>

@@ -28,4 +28,29 @@ class Event extends Model
   {
     return $this->hasOne(WeddingEvent::class);
   }
+
+  public function eventJourneys()
+  {
+    return $this->hasMany(EventJourney::class)->orderBy('journey_date', 'asc');
+  }
+
+  public function eventGalleries()
+  {
+    return $this->hasMany(EventGallery::class)->orderBy('order', 'asc');
+  }
+
+  public function eventLocations()
+  {
+    return $this->hasMany(EventLocation::class)->orderBy('event_time', 'asc');
+  }
+
+  public function eventBanks()
+  {
+    return $this->hasMany(EventBank::class);
+  }
+
+  public function wishes()
+  {
+    return $this->hasMany(Wish::class)->orderBy('created_at', 'desc');
+  }
 }

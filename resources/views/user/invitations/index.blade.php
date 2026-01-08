@@ -3,97 +3,119 @@
 @section('title', 'Guest Management')
 
 @section('content')
-	<div class="bg-white rounded-lg shadow-md p-6">
-		<div class="flex justify-between items-center mb-6">
-			<div>
-				<h2 class="text-2xl font-semibold text-gray-800">Guest List</h2>
-				<p class="text-gray-600 text-sm">Event: {{ $event->title }}</p>
+	<div class="container">
+		<div class="card shadow-sm">
+			<div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+				<div>
+					<h4 class="mb-1 text-dark">Guest List</h4>
+					<small class="text-muted">Event: <strong>{{ $event->title }}</strong></small>
+				</div>
+				<div class="d-flex gap-2">
+					<a href="{{ route('user.events.index') }}" class="btn btn-outline-secondary">Back to Events</a>
+					<a href="{{ route('user.events.invitations.create', $event->id) }}" class="btn btn-primary">Add Guest</a>
+				</div>
 			</div>
-			<div class="flex space-x-2">
-				<a href="{{ route('user.events.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Back
-					to Events</a>
-				<a href="{{ route('user.events.invitations.create', $event->id) }}"
-					class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Add Guest</a>
+
+			<div class="card-body">
+				@if (session('success'))
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						{{ session('success') }}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				@endif
+
+				<div class="table-responsive">
+					<table id="guestsTable" class="table table-striped table-hover align-middle" style="width:100%">
+						<thead class="table-light">
+							<tr>
+								<th>Guest Name</th>
+								<th>Link</th>
+								<th>Status</th>
+								<th class="text-end">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($invitations as $invitation)
+								<tr>
+									<td>
+										<span class="fw-bold text-dark">{{ $invitation->guest_name }}</span>
+										@if ($invitation->guest_address)
+											<br><small class="text-muted">{{ $invitation->guest_address }}</small>
+										@endif
+									</td>
+									<td>
+										<div class="input-group input-group-sm">
+											<input type="text" class="form-control"
+												value="{{ route('frontend.invitation', [$event->slug, $invitation->slug]) }}" readonly
+												id="link-{{ $invitation->id }}">
+											<button class="btn btn-outline-primary" type="button"
+												onclick="copyToClipboard('{{ route('frontend.invitation', [$event->slug, $invitation->slug]) }}')">
+												Copy
+											</button>
+										</div>
+									</td>
+									<td>
+										@if ($invitation->is_opened)
+											<span class="badge bg-success rounded-pill">Opened</span>
+											<br><small class="text-muted"
+												style="font-size: 0.75rem;">{{ \Carbon\Carbon::parse($invitation->opened_at)->diffForHumans() }}</small>
+										@else
+											<span class="badge bg-warning text-dark rounded-pill">Not Opened</span>
+										@endif
+									</td>
+									<td class="text-end">
+										<div class="btn-group btn-group-sm">
+											<a href="{{ route('user.events.invitations.edit', [$event->id, $invitation->id]) }}"
+												class="btn btn-outline-secondary">Edit</a>
+											<form action="{{ route('user.events.invitations.destroy', [$event->id, $invitation->id]) }}" method="POST"
+												class="d-inline" onsubmit="return confirm('Are you sure you want to delete this guest?');">
+												@csrf
+												@method('DELETE')
+												<button type="submit" class="btn btn-outline-danger">Delete</button>
+											</form>
+										</div>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-
-		@if (session('success'))
-			<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-				<span class="block sm:inline">{{ session('success') }}</span>
-			</div>
-		@endif
-
-		@if ($invitations->isEmpty())
-			<div class="text-center py-10">
-				<p class="text-gray-500 text-lg">No guests added yet.</p>
-				<a href="{{ route('user.events.invitations.create', $event->id) }}"
-					class="text-indigo-600 font-semibold mt-2 inline-block">Add your first guest</a>
-			</div>
-		@else
-			<div class="overflow-x-auto">
-				<table class="min-w-full leading-normal">
-					<thead>
-						<tr>
-							<th
-								class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-								Guest Name</th>
-							<th
-								class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-								Slug/URL</th>
-							<th
-								class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-								Status</th>
-							<th
-								class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-								Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach ($invitations as $invitation)
-							<tr>
-								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-									<p class="text-gray-900 whitespace-no-wrap font-semibold">{{ $invitation->guest_name }}</p>
-									@if ($invitation->guest_address)
-										<p class="text-gray-500 text-xs">{{ $invitation->guest_address }}</p>
-									@endif
-								</td>
-								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-									<p class="text-gray-600 whitespace-no-wrap text-xs">{{ $invitation->slug }}</p>
-									<button class="text-indigo-600 text-xs hover:text-indigo-900"
-										onclick="copyToClipboard('{{ url('/invitation/' . $invitation->slug) }}')">Copy Link</button>
-								</td>
-								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-									<span
-										class="relative inline-block px-3 py-1 font-semibold leading-tight {{ $invitation->is_opened ? 'text-green-900' : 'text-yellow-900' }}">
-										<span aria-hidden
-											class="absolute inset-0 {{ $invitation->is_opened ? 'bg-green-200' : 'bg-yellow-200' }} opacity-50 rounded-full"></span>
-										<span class="relative">{{ $invitation->is_opened ? 'Opened' : 'Not Opened' }}</span>
-									</span>
-								</td>
-								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-									<div class="flex space-x-2">
-										<a href="{{ route('user.events.invitations.edit', [$event->id, $invitation->id]) }}"
-											class="text-blue-600 hover:text-blue-900">Edit</a>
-										<form action="{{ route('user.events.invitations.destroy', [$event->id, $invitation->id]) }}" method="POST"
-											onsubmit="return confirm('Are you sure?');">
-											@csrf
-											@method('DELETE')
-											<button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-										</form>
-									</div>
-								</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
-			</div>
-		@endif
 	</div>
 
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+	<!-- DataTables JS -->
+	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+	<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
 	<script>
+		$(document).ready(function() {
+			$('#guestsTable').DataTable({
+				"order": [
+					[0, "asc"]
+				], // Sort by name by default
+				"pageLength": 10,
+				"language": {
+					"search": "Cari Tamu:",
+					"lengthMenu": "Tampilkan _MENU_ tamu per halaman",
+					"info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ tamu",
+					"paginate": {
+						"first": "Pertama",
+						"last": "Terakhir",
+						"next": "Selanjutnya",
+						"previous": "Sebelumnya"
+					}
+				}
+			});
+		});
+
 		function copyToClipboard(text) {
 			navigator.clipboard.writeText(text).then(function() {
-				alert('Link copied to clipboard!');
+				// Optional: You could show a toast or change the button text temporarily
+				alert('Link berhasil disalin!');
 			}, function(err) {
 				console.error('Could not copy text: ', err);
 			});

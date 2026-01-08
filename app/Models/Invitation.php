@@ -14,4 +14,14 @@ class Invitation extends Model
     'is_opened',
     'opened_at',
   ];
+
+  public function rsvp()
+  {
+    return $this->hasOne(Rsvp::class);
+  }
+
+  public function wishes()
+  {
+    return $this->hasMany(Wish::class);
+  }
 }

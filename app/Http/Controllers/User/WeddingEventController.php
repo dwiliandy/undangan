@@ -31,19 +31,30 @@ class WeddingEventController extends Controller
       'bride_name' => 'required|string|max:255',
       'groom_parent' => 'nullable|string|max:255',
       'bride_parent' => 'nullable|string|max:255',
+      'groom_photo' => 'nullable|image|max:2048',
+      'bride_photo' => 'nullable|image|max:2048',
     ]);
+
+    $data = [
+      'groom_name' => $request->groom_name,
+      'bride_name' => $request->bride_name,
+      'groom_parent' => $request->groom_parent,
+      'bride_parent' => $request->bride_parent,
+    ];
+
+    if ($request->hasFile('groom_photo')) {
+      $data['groom_photo'] = $request->file('groom_photo')->store('weddings', 'public');
+    }
+
+    if ($request->hasFile('bride_photo')) {
+      $data['bride_photo'] = $request->file('bride_photo')->store('weddings', 'public');
+    }
 
     $event->weddingEvent()->updateOrCreate(
       ['event_id' => $event->id],
-      [
-        'groom_name' => $request->groom_name,
-        'bride_name' => $request->bride_name,
-        'groom_parent' => $request->groom_parent,
-        'bride_parent' => $request->bride_parent,
-      ]
+      $data
     );
 
-    return redirect()->route('user.events.wedding-details.edit', $event->id)
-      ->with('success', 'Wedding details updated successfully!');
+    return back()->with('success', 'Wedding details updated successfully!');
   }
 }

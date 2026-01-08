@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WeddingEvent extends Model
+class EventBank extends Model
 {
+  use HasFactory;
+
   protected $fillable = [
     'event_id',
-    'groom_name',
-    'bride_name',
-    'groom_parent',
-    'bride_parent',
-    'groom_photo',
-    'bride_photo',
-    'groom_instagram',
-    'bride_instagram',
+    'bank_name',
+    'account_number',
+    'account_name',
   ];
 
   public function event()

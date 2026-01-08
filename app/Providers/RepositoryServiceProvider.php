@@ -23,6 +23,14 @@ class RepositoryServiceProvider extends ServiceProvider
       \App\Repositories\Interfaces\InvitationRepositoryInterface::class,
       \App\Repositories\Eloquent\InvitationRepository::class
     );
+    $this->app->bind(
+      \App\Repositories\Interfaces\RsvpRepositoryInterface::class,
+      \App\Repositories\Eloquent\RsvpRepository::class
+    );
+    $this->app->bind(
+      \App\Repositories\Interfaces\WishRepositoryInterface::class,
+      \App\Repositories\Eloquent\WishRepository::class
+    );
   }
 
   /**

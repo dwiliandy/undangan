@@ -70,8 +70,9 @@
 			style="background-image: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');"></div>
 
 		<p class="text-xs md:text-sm tracking-[0.4em] uppercase mb-8 z-10 border-b border-black pb-2">The Wedding Of</p>
-		<h1 class="text-5xl md:text-8xl font-serif font-light mb-10 z-10">{{ $event->wedding->groom_name ?? 'Groom' }} <span
-				class="text-3xl italic">&</span> {{ $event->wedding->bride_name ?? 'Bride' }}</h1>
+		<h1 class="text-5xl md:text-8xl font-serif font-light mb-10 z-10">{{ $event->weddingEvent->groom_name ?? 'Groom' }}
+			<span class="text-3xl italic">&</span> {{ $event->weddingEvent->bride_name ?? 'Bride' }}
+		</h1>
 
 		@if (isset($invitation))
 			<div class="z-10 w-full max-w-sm bg-gray-50 p-6 border border-gray-200 mb-8">
@@ -115,8 +116,8 @@
 
 			<h1 class="text-5xl md:text-8xl font-serif font-light mb-6 tracking-tighter" data-aos="zoom-in"
 				data-aos-duration="1200">
-				{{ $event->wedding->groom_name ?? 'Groom' }} <span class="text-4xl align-middle italic">&</span>
-				{{ $event->wedding->bride_name ?? 'Bride' }}
+				{{ $event->weddingEvent->groom_name ?? 'Groom' }} <span class="text-4xl align-middle italic">&</span>
+				{{ $event->weddingEvent->bride_name ?? 'Bride' }}
 			</h1>
 
 			<div class="w-16 h-px bg-black mb-8" data-aos="fade-up"></div>
@@ -140,15 +141,20 @@
 				<div class="text-center space-y-6" data-aos="fade-right">
 					<div
 						class="w-64 h-80 mx-auto bg-gray-200 overflow-hidden relative grayscale hover:grayscale-0 transition duration-700">
-						<img src="https://via.placeholder.com/300x400" alt="Groom" class="w-full h-full object-cover">
+						<img
+							src="{{ isset($event->weddingEvent->groom_photo) ? Storage::url($event->weddingEvent->groom_photo) : 'https://via.placeholder.com/300x400' }}"
+							alt="Groom" class="w-full h-full object-cover">
 					</div>
 					<div>
-						<h3 class="text-2xl font-serif">{{ $event->wedding->groom_name ?? 'The Groom' }}</h3>
-						<p class="text-sm text-gray-500 uppercase tracking-widest mt-2">Son of {{ $event->wedding->groom_parent ?? '...' }}
+						<h3 class="text-2xl font-serif">{{ $event->weddingEvent->groom_name ?? 'The Groom' }}</h3>
+						<p class="text-sm text-gray-500 uppercase tracking-widest mt-2">Son of
+							{{ $event->weddingEvent->groom_parent ?? '...' }}
 						</p>
 						<div class="flex justify-center gap-4 mt-4 text-gray-400">
-							<a href="#" class="hover:text-black"><i class="fab fa-instagram"></i></a>
-							<a href="#" class="hover:text-black"><i class="fab fa-twitter"></i></a>
+							@if ($event->weddingEvent->groom_instagram)
+								<a href="https://instagram.com/{{ $event->weddingEvent->groom_instagram }}" target="_blank"
+									class="hover:text-black"><i class="fab fa-instagram"></i></a>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -157,15 +163,19 @@
 				<div class="text-center space-y-6" data-aos="fade-left">
 					<div
 						class="w-64 h-80 mx-auto bg-gray-200 overflow-hidden relative grayscale hover:grayscale-0 transition duration-700">
-						<img src="https://via.placeholder.com/300x400" alt="Bride" class="w-full h-full object-cover">
+						<img
+							src="{{ isset($event->weddingEvent->bride_photo) ? Storage::url($event->weddingEvent->bride_photo) : 'https://via.placeholder.com/300x400' }}"
+							alt="Bride" class="w-full h-full object-cover">
 					</div>
 					<div>
-						<h3 class="text-2xl font-serif">{{ $event->wedding->bride_name ?? 'The Bride' }}</h3>
+						<h3 class="text-2xl font-serif">{{ $event->weddingEvent->bride_name ?? 'The Bride' }}</h3>
 						<p class="text-sm text-gray-500 uppercase tracking-widest mt-2">Daughter of
-							{{ $event->wedding->bride_parent ?? '...' }}</p>
+							{{ $event->weddingEvent->bride_parent ?? '...' }}</p>
 						<div class="flex justify-center gap-4 mt-4 text-gray-400">
-							<a href="#" class="hover:text-black"><i class="fab fa-instagram"></i></a>
-							<a href="#" class="hover:text-black"><i class="fab fa-twitter"></i></a>
+							@if ($event->weddingEvent->bride_instagram)
+								<a href="https://instagram.com/{{ $event->weddingEvent->bride_instagram }}" target="_blank"
+									class="hover:text-black"><i class="fab fa-instagram"></i></a>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -173,12 +183,12 @@
 		</section>
 
 		<!-- Love Story -->
-		@if (isset($event->love_stories) && count($event->love_stories) > 0)
+		@if (isset($event->eventJourneys) && count($event->eventJourneys) > 0)
 			<section class="py-24 bg-gray-50">
 				<div class="max-w-3xl mx-auto px-4">
 					<h2 class="text-3xl md:text-4xl font-serif text-center mb-16" data-aos="fade-up">Our Story</h2>
 					<div class="border-l border-gray-300 ml-4 md:ml-0 md:pl-0 space-y-12">
-						@foreach ($event->love_stories as $story)
+						@foreach ($event->eventJourneys as $story)
 							<div class="relative pl-8 md:pl-0 md:flex md:items-center md:justify-between group" data-aos="fade-up">
 								<!-- Bullet -->
 								<div
@@ -186,13 +196,14 @@
 								</div>
 
 								<div class="md:w-1/2 md:pr-12 md:text-right {{ $loop->index % 2 != 0 ? 'md:order-1' : '' }}">
-									<span class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1 block">{{ $story->year }}</span>
+									<span class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1 block">
+										{{ $story->journey_date ? $story->journey_date->format('Y') : '' }}
+									</span>
 									<h4 class="text-xl font-serif mb-2">{{ $story->title }}</h4>
 								</div>
 
 								<div class="md:w-1/2 md:pl-12 {{ $loop->index % 2 != 0 ? 'md:order-2 md:!text-right' : '' }}">
-									<!-- Fix order css logic if needed, simpler to keep left aligned for text on mobile -->
-									<p class="text-gray-600 text-sm leading-relaxed">{{ $story->story }}</p>
+									<p class="text-gray-600 text-sm leading-relaxed">{{ $story->description }}</p>
 								</div>
 							</div>
 						@endforeach
@@ -205,8 +216,8 @@
 		<section class="py-24 px-4 max-w-5xl mx-auto">
 			<h2 class="text-3xl md:text-4xl font-serif text-center mb-16" data-aos="fade-up">Event Details</h2>
 			<div class="grid md:grid-cols-2 gap-8 text-center">
-				@if (isset($event->locations) && count($event->locations) > 0)
-					@foreach ($event->locations as $location)
+				@if (isset($event->eventLocations) && count($event->eventLocations) > 0)
+					@foreach ($event->eventLocations as $location)
 						<div class="p-10 border border-gray-200 hover:border-black transition duration-500 bg-white" data-aos="fade-up"
 							data-aos-delay="{{ $loop->index * 100 }}">
 							<h4 class="text-xl font-bold uppercase tracking-widest mb-4">{{ $location->location_type }}</h4>
@@ -226,14 +237,20 @@
 		</section>
 
 		<!-- Gallery -->
-		@if (isset($event->gallery) && count($event->gallery) > 0)
+		@if (isset($event->eventGalleries) && count($event->eventGalleries) > 0)
 			<section class="py-0">
 				<div class="grid grid-cols-2 md:grid-cols-4">
-					@foreach ($event->gallery as $photo)
+					@foreach ($event->eventGalleries as $photo)
 						<div class="aspect-[3/4] relative group overflow-hidden bg-gray-100" data-aos="fade-in"
 							data-aos-delay="{{ $loop->index * 50 }}">
-							<img src="{{ $photo->photo_url }}"
+							<img src="{{ Storage::url($photo->image_path) }}"
 								class="w-full h-full object-cover transition duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
+							@if ($photo->caption)
+								<div
+									class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-xs text-center opacity-0 group-hover:opacity-100 transition">
+									{{ $photo->caption }}
+								</div>
+							@endif
 						</div>
 					@endforeach
 				</div>
@@ -244,12 +261,12 @@
 		<section class="py-24 px-4 bg-black text-white text-center">
 			<div class="max-w-4xl mx-auto">
 				<!-- Gift -->
-				@if (isset($event->angpaos) && count($event->angpaos) > 0)
+				@if (isset($event->eventBanks) && count($event->eventBanks) > 0)
 					<div class="mb-20" data-aos="fade-up">
 						<h2 class="text-3xl font-serif mb-8">Wedding Gift</h2>
 						<p class="text-gray-400 text-sm mb-10">Your blessing is enough, but if you wish to give a gift:</p>
 						<div class="grid md:grid-cols-2 gap-6">
-							@foreach ($event->angpaos as $angpao)
+							@foreach ($event->eventBanks as $angpao)
 								<div class="border border-gray-800 p-8 rounded-lg hover:border-gray-600 transition">
 									<h4 class="font-bold uppercase tracking-widest mb-2">{{ $angpao->bank_name }}</h4>
 									<p class="text-2xl font-serif mb-2 select-all" id="acc-{{ $loop->index }}">{{ $angpao->account_number }}
@@ -266,35 +283,39 @@
 				<!-- RSVP -->
 				<div class="bg-white text-black p-8 md:p-16" data-aos="fade-up">
 					<h2 class="text-3xl font-serif mb-8">R.S.V.P</h2>
-					<form class="space-y-6 max-w-lg mx-auto text-left">
+					<form id="rsvp-form" action="{{ route('frontend.rsvp', [$event->slug, $invitation->slug]) }}" method="POST"
+						class="space-y-6 max-w-lg mx-auto text-left">
+						@csrf
 						<div>
 							<label class="block text-xs uppercase tracking-widest mb-2">Name</label>
-							<input type="text"
+							<input type="text" name="name"
 								class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition"
 								value="{{ $invitation->guest_name ?? '' }}">
 						</div>
 						<div class="grid grid-cols-2 gap-6">
 							<div>
 								<label class="block text-xs uppercase tracking-widest mb-2">Attendance</label>
-								<select class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black bg-transparent">
-									<option>Valid</option>
-									<option>Unable</option>
+								<select name="attendance"
+									class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black bg-transparent">
+									<option value="valid">Valid</option>
+									<option value="unable">Unable</option>
 								</select>
 							</div>
 							<div>
-								<label class="block text-xs uppercase tracking-widest mb-2">Guests</label>
-								<select class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black bg-transparent">
-									<option>1</option>
-									<option>2</option>
+								<label class="block text-xs font-bold text-gray-500 uppercase mb-2">Total Guests</label>
+								<select name="total_guest"
+									class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black bg-transparent">
+									<option value="1">1 Person</option>
+									<option value="2">2 Persons</option>
 								</select>
 							</div>
 						</div>
 						<div>
 							<label class="block text-xs uppercase tracking-widest mb-2">Wishes</label>
-							<textarea
+							<textarea name="message"
 							 class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition h-20 bg-transparent"></textarea>
 						</div>
-						<button type="button"
+						<button type="submit"
 							class="w-full bg-black text-white py-4 text-xs uppercase tracking-[0.2em] hover:bg-gray-800 transition mt-8">Send
 							RSVP</button>
 					</form>
@@ -303,11 +324,11 @@
 		</section>
 
 		<!-- Wishes List -->
-		@if (isset($wishes) && count($wishes) > 0)
-			<section class="py-24 px-4 bg-gray-50">
-				<div class="max-w-3xl mx-auto">
-					<h2 class="text-3xl font-serif text-center mb-12" data-aos="fade-up">Wishes</h2>
-					<div class="space-y-6 max-h-96 overflow-y-auto hide-scroll p-2">
+		<section class="py-24 px-4 bg-gray-50" id="wishes-section">
+			<div class="max-w-3xl mx-auto">
+				<h2 class="text-3xl font-serif text-center mb-12" data-aos="fade-up">Wishes</h2>
+				<div id="wishes-container" class="space-y-6 max-h-96 overflow-y-auto hide-scroll p-2">
+					@if (isset($wishes))
 						@foreach ($wishes as $wish)
 							<div class="bg-white p-6 shadow-sm border-l-4 border-black" data-aos="fade-up">
 								<h5 class="font-bold text-sm mb-1">{{ $wish->name }}</h5>
@@ -315,14 +336,14 @@
 								<p class="text-sm text-gray-600 italic">"{{ $wish->message }}"</p>
 							</div>
 						@endforeach
-					</div>
+					@endif
 				</div>
-			</section>
-		@endif
+			</div>
+		</section>
 
 		<footer
 			class="py-10 text-center text-gray-400 text-[10px] uppercase tracking-widest border-t border-gray-100 bg-white">
-			Created with Undangan
+			&copy; {{ date('Y') }} UndanganKita. All Rights Reserved.
 		</footer>
 	</div>
 
@@ -399,5 +420,58 @@
 		}
 		setInterval(updateTimer, 1000);
 		updateTimer();
+
+		// AJAX RSVP
+		document.getElementById('rsvp-form').addEventListener('submit', function(e) {
+			e.preventDefault();
+			const form = this;
+			const btn = form.querySelector('button[type="submit"]');
+			const originalText = btn.innerText;
+			btn.innerText = 'Sending...';
+			btn.disabled = true;
+
+			fetch(form.action, {
+					method: 'POST',
+					headers: {
+						'X-CSRF-TOKEN': '{{ csrf_token() }}',
+						'Accept': 'application/json',
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					body: new FormData(form)
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						alert('Thank you! Your RSVP has been sent.');
+						form.reset();
+
+						// Add wish if present
+						if (data.wish) {
+							const container = document.getElementById('wishes-container');
+							const section = document.getElementById('wishes-section');
+							section.style.display = 'block';
+
+							const html = `
+                            <div class="bg-white p-6 shadow-sm border-l-4 border-black" data-aos="fade-up">
+                                <h5 class="font-bold text-sm mb-1">${data.wish.name}</h5>
+                                <p class="text-xs text-gray-400 mb-3">${data.wish.created_at_human}</p>
+                                <p class="text-sm text-gray-600 italic">"${data.wish.message}"</p>
+                            </div>
+                        `;
+							container.insertAdjacentHTML('afterbegin', html);
+						}
+					} else {
+						alert('Something went wrong. Please try again.');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+					alert('Error submitting form.');
+				})
+				.finally(() => {
+					btn.innerText = originalText;
+					btn.disabled = false;
+				});
+		});
 	</script>
 @endsection

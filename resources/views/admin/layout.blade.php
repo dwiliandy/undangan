@@ -1,70 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>@yield('title', 'Admin Dashboard') - Undangan</title>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@yield('title', 'Admin Dashboard') - Undangan</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap Icons -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Google Fonts: Outfit -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-	tailwind.config = {
-		theme: {
-			extend: {
-				fontFamily: {
-					sans: ['Outfit', 'sans-serif'],
-				},
-			}
+	<style>
+		body {
+			font-family: 'Outfit', sans-serif;
+			background-color: #f8f9fa;
 		}
-	}
-</script>
 
-<!-- DataTables -->
-<link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.tailwindcss.css">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.0.0/js/dataTables.tailwindcss.js"></script>
+		.sidebar {
+			min-width: 260px;
+			max-width: 260px;
+			min-height: 100vh;
+			background: #212529;
+			transition: all 0.3s;
+		}
 
-<style>
-	.dt-container .dt-length select,
-	.dt-container .dt-search input {
-		border-radius: 0.375rem;
-		border-color: #e5e7eb;
-		background-color: #fff;
-		padding: 0.25rem 0.5rem;
-	}
+		.sidebar .nav-link {
+			color: rgba(255, 255, 255, .75);
+			padding: 10px 20px;
+			border-radius: 5px;
+			margin-bottom: 5px;
+		}
 
-	/* Glassmorphism sidebar helper */
-	.glass-sidebar {
-		background: rgba(17, 24, 39, 0.95);
-		backdrop-filter: blur(10px);
-	}
-</style>
+		.sidebar .nav-link:hover,
+		.sidebar .nav-link.active {
+			color: #fff;
+			background: rgba(255, 255, 255, .1);
+		}
+
+		.sidebar .nav-link i {
+			margin-right: 10px;
+		}
+
+		.main-content {
+			width: 100%;
+			transition: all 0.3s;
+		}
+	</style>
 </head>
 
-<body class="bg-gray-100 flex">
-
-	<!-- Sidebar -->
-	@include('admin.partials.sidebar')
-
-	<div class="flex-1 flex flex-col h-screen">
-		<!-- Navbar -->
-		@include('admin.partials.navbar')
+<body>
+	<div class="d-flex">
+		<!-- Sidebar -->
+		@include('admin.partials.sidebar')
 
 		<!-- Main Content -->
-		<main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6">
-			@yield('content')
-		</main>
+		<div class="main-content d-flex flex-column min-vh-100">
+			@include('admin.partials.navbar')
 
-		<!-- Footer -->
-		@include('admin.partials.footer')
+			<main class="flex-grow-1 p-4">
+				@yield('content')
+			</main>
+
+			@include('admin.partials.footer')
+		</div>
 	</div>
 
+	<!-- Bootstrap Bundle -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- jQuery for DataTables -->
+	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 </body>
 
 </html>

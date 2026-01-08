@@ -18,6 +18,18 @@ class EventRepository extends BaseRepository implements EventRepositoryInterface
     return $this->model->where('slug', $slug)->first();
   }
 
+  public function getWithDetails(string $slug): ?Model
+  {
+    return $this->model->with([
+      'template',
+      'weddingEvent',
+      'eventJourneys',
+      'eventLocations',
+      'eventGalleries',
+      'eventBanks'
+    ])->where('slug', $slug)->where('is_active', true)->first();
+  }
+
   public function getActiveEvents()
   {
     return $this->model->where('is_active', true)->get();

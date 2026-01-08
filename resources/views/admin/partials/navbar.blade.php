@@ -1,19 +1,15 @@
-<header class="flex justify-between items-center py-4 px-6 bg-white border-b border-gray-200">
-	<div class="flex items-center">
-		<button class="md:hidden text-gray-500 focus:outline-none">
-			<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-			</svg>
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm px-4">
+	<div class="container-fluid">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
 		</button>
-	</div>
-
-	<div class="flex items-center space-x-4">
-		<div class="relative">
-			<span class="text-gray-700">Admin</span>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<span class="nav-link disabled">Welcome, Admin</span>
+				</li>
+			</ul>
 		</div>
-		<form action="{{ route('admin.logout') }}" method="POST">
-			@csrf
-			<button type="submit" class="text-red-500 hover:text-red-700 text-sm font-medium">Logout</button>
-		</form>
 	</div>
-</header>
+</nav>
