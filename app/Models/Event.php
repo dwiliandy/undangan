@@ -7,6 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    /** @use HasFactory<\Database\Factories\EventFactory> */
-    use HasFactory;
+  /** @use HasFactory<\Database\Factories\EventFactory> */
+  use HasFactory;
+  public function invitations()
+  {
+    return $this->hasMany(Invitation::class);
+  }
+
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+  public function template()
+  {
+    return $this->belongsTo(EventTemplate::class, 'event_template_id');
+  }
 }
