@@ -1,19 +1,26 @@
-<header class="flex justify-between items-center py-4 px-6 bg-white border-b border-gray-200">
-	<div class="flex items-center">
-		<button class="md:hidden text-gray-500 focus:outline-none">
-			<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-			</svg>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 shadow-sm rounded">
+	<div class="container-fluid">
+		<button type="button" id="sidebarCollapse" class="btn btn-dark d-inline-block d-lg-none ml-auto">
+			<i class="fas fa-align-justify"></i>
 		</button>
-	</div>
 
-	<div class="flex items-center space-x-4">
-		<div class="relative">
-			<span class="text-gray-700">User</span>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="nav navbar-nav ms-auto">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false">
+						{{ auth()->user()->name }}
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+						<li>
+							<form method="POST" action="{{ route('logout') }}">
+								@csrf
+								<button type="submit" class="dropdown-item">Logout</button>
+							</form>
+						</li>
+					</ul>
+				</li>
+			</ul>
 		</div>
-		<form action="{{ route('logout') }}" method="POST">
-			@csrf
-			<button type="submit" class="text-red-500 hover:text-red-700 text-sm font-medium">Logout</button>
-		</form>
 	</div>
-</header>
+</nav>

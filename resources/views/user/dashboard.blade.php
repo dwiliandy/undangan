@@ -3,37 +3,53 @@
 @section('title', 'My Dashboard')
 
 @section('content')
-	<div class="bg-white rounded-lg shadow-md p-6">
-		<h2 class="text-2xl font-semibold text-gray-800 mb-4">Welcome, {{ auth()->user()->name }}!</h2>
-		<p class="text-gray-600 mb-6">Manage your events and invitations here.</p>
+	<div class="card shadow-sm">
+		<div class="card-body">
+			<h2 class="card-title h4 mb-4">Welcome, {{ auth()->user()->name }}!</h2>
+			<p class="card-text text-muted mb-4">Manage your events and invitations here.</p>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-			<!-- Create Event Card -->
-			<div
-				class="bg-indigo-50 p-6 rounded-lg border border-indigo-100 flex flex-col items-center justify-center text-center hover:bg-indigo-100 transition">
-				<div class="p-3 bg-indigo-200 rounded-full mb-4">
-					<svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-					</svg>
+			<div class="row g-4">
+				<!-- Create Event Card -->
+				<div class="col-md-6 col-lg-4">
+					<div class="card h-100 border-primary text-center bg-light">
+						<div class="card-body d-flex flex-column justify-content-center align-items-center">
+							<div class="mb-3 text-primary">
+								<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+									class="bi bi-calendar-plus" viewBox="0 0 16 16">
+									<path
+										d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z" />
+									<path
+										d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+								</svg>
+							</div>
+							<h5 class="card-title text-primary">Create New Event</h5>
+							<p class="card-text small text-muted">Start creating your wedding or birthday invitation.</p>
+							<a href="{{ route('user.events.create') }}" class="btn btn-primary mt-auto">Create Now</a>
+						</div>
+					</div>
 				</div>
-				<h3 class="font-bold text-indigo-700 text-lg mb-2">Create New Event</h3>
-				<p class="text-indigo-600 text-sm mb-4">Start creating your wedding or birthday invitation.</p>
-				<a href="{{ route('user.events.create') }}"
-					class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Create Now</a>
-			</div>
 
-			<!-- Stats Card -->
-			<div class="bg-white p-6 rounded-lg border border-gray-200">
-				<h3 class="font-bold text-gray-700 mb-2">My Events</h3>
-				<p class="text-3xl font-bold text-gray-800">0</p>
-				<p class="text-gray-500 text-sm mt-1">Active Events</p>
-			</div>
+				<!-- Stats Card -->
+				<div class="col-md-6 col-lg-4">
+					<div class="card h-100">
+						<div class="card-body">
+							<h5 class="card-title text-muted">My Events</h5>
+							<p class="display-6 fw-bold text-dark">0</p>
+							<p class="card-text small text-muted">Active Events</p>
+						</div>
+					</div>
+				</div>
 
-			<!-- Stats Card -->
-			<div class="bg-white p-6 rounded-lg border border-gray-200">
-				<h3 class="font-bold text-gray-700 mb-2">Total Guests</h3>
-				<p class="text-3xl font-bold text-gray-800">0</p>
-				<p class="text-gray-500 text-sm mt-1">Across all events</p>
+				<!-- Stats Card -->
+				<div class="col-md-6 col-lg-4">
+					<div class="card h-100">
+						<div class="card-body">
+							<h5 class="card-title text-muted">Total Guests</h5>
+							<p class="display-6 fw-bold text-dark">0</p>
+							<p class="card-text small text-muted">Across all events</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

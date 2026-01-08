@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function () {
   Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
 
   Route::resource('events', \App\Http\Controllers\User\EventController::class)->names('user.events');
+  Route::get('/events/{event}/wedding-details', [\App\Http\Controllers\User\WeddingEventController::class, 'edit'])->name('user.events.wedding-details.edit');
+  Route::post('/events/{event}/wedding-details', [\App\Http\Controllers\User\WeddingEventController::class, 'update'])->name('user.events.wedding-details.update');
   Route::resource('events.invitations', \App\Http\Controllers\User\InvitationController::class)->names('user.events.invitations');
 });
 

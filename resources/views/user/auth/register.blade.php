@@ -5,62 +5,71 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Register - Undangan</title>
-	<script src="https://cdn.tailwindcss.com"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body {
+			background-color: #f8f9fa;
+		}
+
+		.card-registration {
+			border: none;
+			border-radius: 1rem;
+			box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+		}
+	</style>
 </head>
 
-<body class="bg-indigo-50 flex items-center justify-center h-screen">
-	<div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-		<h2 class="text-3xl font-extrabold mb-6 text-center text-indigo-700">Create Account</h2>
+<body class="d-flex align-items-center min-vh-100 py-3 py-md-5">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+				<div class="card card-registration">
+					<div class="card-body p-5">
+						<h2 class="text-center mb-4 fw-bold text-primary">Create Account</h2>
 
-		@if ($errors->any())
-			<div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
-				<ul class="list-disc ml-4">
-					@foreach ($errors->all() as $error)
-						<li>{{ $error }}</li>
-					@endforeach
-				</ul>
-			</div>
-		@endif
+						@if ($errors->any())
+							<div class="alert alert-danger" role="alert">
+								<ul class="mb-0 ps-3">
+									@foreach ($errors->all() as $error)
+										<li>{{ $error }}</li>
+									@endforeach
+								</ul>
+							</div>
+						@endif
 
-		<form action="{{ route('register.submit') }}" method="POST">
-			@csrf
-			<div class="mb-4">
-				<label class="block text-gray-700 text-sm font-bold mb-2" for="name">Full Name</label>
-				<input
-					class="shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-					id="name" type="text" name="name" placeholder="John Doe" required>
+						<form action="{{ route('register.submit') }}" method="POST">
+							@csrf
+							<div class="mb-3">
+								<label for="name" class="form-label fw-bold">Full Name</label>
+								<input type="text" class="form-control" id="name" name="name" placeholder="John Doe" required>
+							</div>
+							<div class="mb-3">
+								<label for="email" class="form-label fw-bold">Email Address</label>
+								<input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+							</div>
+							<div class="mb-3">
+								<label for="password" class="form-label fw-bold">Password</label>
+								<input type="password" class="form-control" id="password" name="password" placeholder="********" required>
+							</div>
+							<div class="mb-4">
+								<label for="password_confirmation" class="form-label fw-bold">Confirm Password</label>
+								<input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
+									placeholder="********" required>
+							</div>
+							<div class="d-grid">
+								<button class="btn btn-primary btn-lg" type="submit">Register</button>
+							</div>
+							<div class="text-center mt-3">
+								<p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="{{ route('login') }}"
+										class="link-danger">Sign In</a></p>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
-			<div class="mb-4">
-				<label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email Address</label>
-				<input
-					class="shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-					id="email" type="email" name="email" placeholder="you@example.com" required>
-			</div>
-			<div class="mb-4">
-				<label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
-				<input
-					class="shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-					id="password" type="password" name="password" placeholder="********" required>
-			</div>
-			<div class="mb-6">
-				<label class="block text-gray-700 text-sm font-bold mb-2" for="password_confirmation">Confirm Password</label>
-				<input
-					class="shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-					id="password_confirmation" type="password" name="password_confirmation" placeholder="********" required>
-			</div>
-			<div class="flex items-center justify-between">
-				<button
-					class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
-					type="submit">
-					Register
-				</button>
-			</div>
-			<div class="mt-4 text-center">
-				<p class="text-gray-600 text-sm">Already have an account? <a href="{{ route('login') }}"
-						class="text-indigo-600 hover:text-indigo-800 font-bold">Sign In</a></p>
-			</div>
-		</form>
+		</div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

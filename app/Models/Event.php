@@ -23,4 +23,9 @@ class Event extends Model
   {
     return $this->belongsTo(EventTemplate::class, 'event_template_id');
   }
+
+  public function weddingEvent()
+  {
+    return $this->hasOne(WeddingEvent::class);
+  }
 }
