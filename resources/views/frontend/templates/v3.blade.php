@@ -88,34 +88,29 @@
 	</button>
 
 	<!-- Cover Section -->
+	<!-- Cover Section -->
 	<div id="cover"
-		class="fixed inset-0 z-50 bg-[#0f0f0f] border-x border-[#333] max-w-xl mx-auto flex flex-col justify-center items-center text-center p-8 overflow-hidden">
-		<!-- Ornament -->
-		<div class="absolute top-10 w-32 h-px bg-gold opacity-50"></div>
+		class="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-center items-center text-center p-6 bg-cover bg-center overflow-y-auto">
+		<div
+			class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] pointer-events-none">
+		</div>
 
-		<p class="text-[#9d7c3c] text-xs uppercase tracking-[0.4em] mb-8">The Wedding Of</p>
-		<h1 class="text-4xl md:text-5xl font-cinzel text-gold mb-8 leading-snug">
-			{{ $event->weddingEvent->groom_name ?? 'Groom' }} <br> <span class="text-2xl text-[#666] italic">&</span> <br>
-			{{ $event->weddingEvent->bride_name ?? 'Bride' }}
-		</h1>
+		<div class="relative z-10 border border-gold p-8 md:p-12 max-w-md w-full m-auto bg-black/80 backdrop-blur-sm">
+			<h4 class="text-gold tracking-[0.3em] uppercase text-xs mb-4" data-aos="fade-down">Save The Date</h4>
+			<div class="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-[#9d7c3c]"></div>
+			<div class="absolute -top-1 -right-1 w-2 h-2 border-t border-r border-[#9d7c3c]"></div>
+			<div class="absolute -bottom-1 -left-1 w-2 h-2 border-b border-l border-[#9d7c3c]"></div>
+			<div class="absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-[#9d7c3c]"></div>
 
-		@if (isset($invitation))
-			<div class="border border-[#333] p-6 w-full max-w-xs relative bg-[#111] mb-8">
-				<div class="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-[#9d7c3c]"></div>
-				<div class="absolute -top-1 -right-1 w-2 h-2 border-t border-r border-[#9d7c3c]"></div>
-				<div class="absolute -bottom-1 -left-1 w-2 h-2 border-b border-l border-[#9d7c3c]"></div>
-				<div class="absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-[#9d7c3c]"></div>
-
-				<p class="text-[#666] text-[10px] uppercase tracking-widest mb-2">Special Invitation For</p>
-				<h2 class="text-xl font-serif text-[#e0e0e0]">{{ $invitation->guest_name }}</h2>
-				@if ($invitation->guest_address)
-					<p class="text-[#9d7c3c] text-[10px] uppercase tracking-widest mt-2">{{ $invitation->guest_address }}</p>
-				@endif
-			</div>
-		@endif
+			<p class="text-[#666] text-[10px] uppercase tracking-widest mb-2">Special Invitation For</p>
+			<h2 class="text-xl font-serif text-[#e0e0e0]">{{ $invitation->guest_name }}</h2>
+			@if ($invitation->guest_address)
+				<p class="text-[#9d7c3c] text-[10px] uppercase tracking-widest mt-2">{{ $invitation->guest_address }}</p>
+			@endif
+		</div>
 
 		<!-- Countdown Cover -->
-		<div class="flex space-x-4 mb-10 text-[#f4d07c]">
+		<div class="flex space-x-4 mb-10 text-[#f4d07c] relative z-20 mt-8">
 			<div class="text-center"><span id="c-days" class="text-xl font-cinzel block">00</span><span
 					class="text-[9px] uppercase text-[#666]">Days</span></div>
 			<div class="text-center"><span id="c-hours" class="text-xl font-cinzel block">00</span><span
@@ -127,7 +122,7 @@
 		</div>
 
 		<button id="open-invitation"
-			class="px-10 py-3 bg-gradient-to-r from-[#9d7c3c] to-[#7a5e2a] text-[#111] font-bold text-xs uppercase tracking-[0.2em] hover:brightness-110 transition open-btn-animate">
+			class="relative z-50 px-10 py-3 bg-gradient-to-r from-[#9d7c3c] to-[#7a5e2a] text-[#111] font-bold text-xs uppercase tracking-[0.2em] hover:brightness-110 transition open-btn-animate shadow-lg cursor-pointer">
 			Open Invitation
 		</button>
 	</div>

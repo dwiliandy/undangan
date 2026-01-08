@@ -97,14 +97,14 @@
 
 	<!-- Cover (Match Poster) -->
 	<div id="cover"
-		class="fixed inset-0 z-50 bg-blue flex flex-col justify-center items-center text-center overflow-hidden">
+		class="fixed inset-0 z-50 bg-blue flex flex-col justify-center items-center text-center overflow-y-auto">
 		<!-- Background Elements -->
-		<div class="absolute inset-0 opacity-20 transform scale-150 rotate-12">
+		<div class="absolute inset-0 opacity-20 transform scale-150 rotate-12 pointer-events-none">
 			<div class="h-full w-1/3 bg-white absolute top-0 left-0"></div>
 			<div class="h-full w-1/3 bg-red absolute top-0 right-0"></div>
 		</div>
 
-		<div class="relative z-10 w-full max-w-sm mx-auto px-4">
+		<div class="relative z-10 w-full max-w-sm mx-auto px-4 m-auto py-10">
 			<div class="bg-white p-1 skew-box mb-8 shadow-2xl border-l-8 border-red">
 				<div class="bg-blue p-8 unskew-text border-2 border-white">
 					<p class="text-yellow-400 font-bold tracking-widest text-sm mb-2">OFFICIAL MATCHDAY</p>
@@ -476,7 +476,7 @@
 
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 	<script>
-		AOS.init();
+		// AOS.init(); // Moved to open trigger
 
 		// Cover Logic
 		const cover = document.getElementById('cover');
@@ -497,7 +497,7 @@
 			setTimeout(() => {
 				cover.style.display = 'none';
 				main.style.display = 'block';
-				AOS.refresh();
+				AOS.init(); // Init AOS after visible
 			}, 500);
 		});
 
@@ -577,7 +577,7 @@
 						if (data.wish) {
 							const container = document.getElementById('wishes-container');
 							section = document.getElementById(
-							'wishes-section'); // Global var if needed (using id here)
+								'wishes-section'); // Global var if needed (using id here)
 							// document.getElementById('wishes-section').style.display = 'block'; // Already visible
 
 							const html = `

@@ -57,8 +57,8 @@ class FrontendController extends Controller
       'bride_name' => 'Juliet Capulet',
       'groom_parent' => 'Mr. & Mrs. Montague',
       'bride_parent' => 'Mr. & Mrs. Capulet',
-      'groom_photo' => null,
-      'bride_photo' => null,
+      'groom_photo' => asset('image/couple/grooms.jpg'),
+      'bride_photo' => asset('image/couple/brides.jpg'),
       'groom_instagram' => 'romeo_montague',
       'bride_instagram' => 'juliet_capulet',
     ];
@@ -88,19 +88,13 @@ class FrontendController extends Controller
       (object) ['journey_date' => now()->subYear(), 'title' => 'She Said Yes', 'description' => 'Proposed under the stars exactly where we met.']
     ]);
 
-    // Mock Gallery - Note: In real app we use Storage::url(), so we should simulate full urls or handle logic in view.
-    // For preview we will just return external URLs, so we might need a small helper in view: 
-    // Storage::url() works on relative paths. External URLs might break if passed to Storage::url().
-    // We'll update the view to check if it's a URL or storage path, OR we leave these as valid URLs and view logic handles "if http... else Storage::url"
-    // But simplified: The real data stores just filenames 'weddings/xxx.jpg'. 
-    // Let's use a trick: standard view uses Storage::url($path). If we put a full URL here, it might be weird. 
-    // Actually, simply putting text here. The view uses Storage::url().
-    // Ideally we should make the view robust. But for now let's just make the view handle "if starts with http, use it, else Storage::url".
+    // Mock Gallery
     $event->eventGalleries = collect([
-      (object) ['image_path' => 'https://images.unsplash.com/photo-1511285560982-1351cdeb9821?auto=format&fit=crop&w=800&q=80', 'caption' => 'Our First Trip'],
-      (object) ['image_path' => 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80', 'caption' => 'The Proposal'],
-      (object) ['image_path' => 'https://images.unsplash.com/photo-1519225421980-715cb0202128?auto=format&fit=crop&w=800&q=80', 'caption' => 'Pre-wedding'],
-      (object) ['image_path' => 'https://images.unsplash.com/photo-1520854221250-85d30a23c8a5?auto=format&fit=crop&w=800&q=80', 'caption' => 'Engagement']
+      (object) ['image_path' => asset('image/gallery/1.jpg'), 'caption' => 'Gallery 1'],
+      (object) ['image_path' => asset('image/gallery/2.jpg'), 'caption' => 'Gallery 2'],
+      (object) ['image_path' => asset('image/gallery/3.jpg'), 'caption' => 'Gallery 3'],
+      (object) ['image_path' => asset('image/gallery/4.jpg'), 'caption' => 'Gallery 4'],
+      (object) ['image_path' => asset('image/gallery/5.jpg'), 'caption' => 'Gallery 5']
     ]);
 
     // Mock Angpao/Gift

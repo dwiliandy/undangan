@@ -141,32 +141,34 @@
 
 	<!-- Cover -->
 	<div id="cover"
-		class="fixed inset-0 z-50 bg-[#FAF9F6] flex flex-col justify-center items-center text-center p-6 leaf-pattern">
-		<div class="border-2 border-sage p-2 rounded-full mb-8">
-			<div
-				class="border border-earth rounded-full p-12 w-64 h-64 flex flex-col items-center justify-center bg-white shadow-lg relative overflow-hidden">
-				<div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/flower.png')]"></div>
-				<!-- Leaf decoration -->
-				<i class="fas fa-leaf text-sage text-2xl mb-4 absolute top-4 opacity-50"></i>
+		class="fixed inset-0 z-50 bg-[#FAF9F6] flex flex-col justify-center items-center text-center p-6 leaf-pattern overflow-y-auto">
+		<div class="m-auto w-full max-w-lg py-10 flex flex-col items-center justify-center min-h-full">
+			<div class="border-2 border-sage p-2 rounded-full mb-8 inline-block">
+				<div
+					class="border border-earth rounded-full p-12 w-64 h-64 flex flex-col items-center justify-center bg-white shadow-lg relative overflow-hidden">
+					<div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/flower.png')]"></div>
+					<!-- Leaf decoration -->
+					<i class="fas fa-leaf text-sage text-2xl mb-4 absolute top-4 opacity-50"></i>
 
-				<h2 class="font-serif text-earth text-lg mb-2">The Wedding of</h2>
-				<h1 class="font-serif text-3xl font-bold text-sage italic">{{ $event->weddingEvent->groom_name }}</h1>
-				<span class="font-serif text-xl text-earth my-1">&</span>
-				<h1 class="font-serif text-3xl font-bold text-sage italic">{{ $event->weddingEvent->bride_name }}</h1>
+					<h2 class="font-serif text-earth text-lg mb-2">The Wedding of</h2>
+					<h1 class="font-serif text-3xl font-bold text-sage italic">{{ $event->weddingEvent->groom_name }}</h1>
+					<span class="font-serif text-xl text-earth my-1">&</span>
+					<h1 class="font-serif text-3xl font-bold text-sage italic">{{ $event->weddingEvent->bride_name }}</h1>
 
-				<i class="fas fa-leaf text-sage text-2xl mt-4 transform rotate-180 absolute bottom-4 opacity-50"></i>
+					<i class="fas fa-leaf text-sage text-2xl mt-4 transform rotate-180 absolute bottom-4 opacity-50"></i>
+				</div>
 			</div>
+
+			@if (isset($invitation))
+				<p class="text-earth text-sm uppercase tracking-widest mb-2 font-serif">Dear</p>
+				<h3 class="font-bold text-xl mb-8">{{ $invitation->guest_name }}</h3>
+			@endif
+
+			<button id="open-invitation"
+				class="bg-sage text-white px-10 py-3 rounded-full font-serif text-lg hover:bg-earth transition shadow-lg flex items-center gap-2">
+				<i class="fas fa-envelope-open-text"></i> Open Invitation
+			</button>
 		</div>
-
-		@if (isset($invitation))
-			<p class="text-earth text-sm uppercase tracking-widest mb-2 font-serif">Dear</p>
-			<h3 class="font-bold text-xl mb-8">{{ $invitation->guest_name }}</h3>
-		@endif
-
-		<button id="open-invitation"
-			class="bg-sage text-white px-10 py-3 rounded-full font-serif text-lg hover:bg-earth transition shadow-lg flex items-center gap-2">
-			<i class="fas fa-envelope-open-text"></i> Open Invitation
-		</button>
 	</div>
 
 	<!-- Main Content -->
@@ -458,7 +460,7 @@
 
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 	<script>
-		AOS.init();
+		// AOS.init(); // Moved to open trigger
 
 		// Cover Logic
 		const cover = document.getElementById('cover');
@@ -478,7 +480,7 @@
 			setTimeout(() => {
 				cover.style.display = 'none';
 				main.style.display = 'block';
-				AOS.refresh();
+				AOS.init(); // Init AOS after visible
 			}, 1000);
 		});
 

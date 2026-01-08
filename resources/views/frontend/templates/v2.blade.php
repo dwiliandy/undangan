@@ -89,7 +89,9 @@
 
 	<!-- Cover Section (Full Screen) -->
 	<div id="cover"
-		class="fixed inset-0 z-50 bg-[#fff5f5] flex flex-col justify-center items-center text-center p-4 bg-cover bg-center overflow-hidden">
+		class="fixed inset-0 z-50 bg-dark-blue flex flex-col justify-center items-center text-center bg-cover bg-center overflow-y-auto"
+		style="background-image: url('https://images.unsplash.com/photo-1511285560982-1351cdeb9821?auto=format&fit=crop&w=1920&q=80');">
+		<div class="absolute inset-0 bg-black/60"></div>
 		<!-- Floating Petals Decoration -->
 		<div class="absolute top-10 left-10 text-pink-200 opacity-50"><i class="fas fa-heart fa-2x animate-bounce"></i></div>
 		<div class="absolute bottom-10 right-10 text-purple-200 opacity-50"><i class="fas fa-heart fa-3x animate-pulse"></i>

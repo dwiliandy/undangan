@@ -96,10 +96,10 @@
 
 	<!-- Cover (Passport) -->
 	<div id="cover"
-		class="fixed inset-0 z-50 bg-navy flex flex-col justify-center items-center text-center p-6 bg-cover">
+		class="fixed inset-0 z-50 bg-navy flex flex-col justify-center items-center text-center p-6 bg-cover overflow-y-auto">
 		<div class="absolute inset-0 passport-pattern pointer-events-none"></div>
 
-		<div class="z-10 bg-navy border-4 border-gold p-8 md:p-12 mb-8 shadow-2xl max-w-sm w-full relative rounded-lg">
+		<div class="z-10 bg-navy border-4 border-gold p-8 md:p-12 mb-8 shadow-2xl max-w-sm w-full relative rounded-lg m-auto">
 			<div class="absolute top-4 left-1/2 -ml-6 text-gold text-4xl"><i class="fas fa-plane"></i></div>
 
 			<h1 class="text-gold font-sans text-xs uppercase tracking-[0.4em] mt-8 mb-4">Passport to Love</h1>
@@ -140,7 +140,8 @@
 	</div>
 
 	<!-- Main Content -->
-	<div id="main-content" class="min-h-screen bg-gray-100 font-sans text-navy pb-20 overflow-x-hidden">
+	<div id="main-content"
+		class="min-h-screen bg-gray-100 font-sans text-navy pb-20 overflow-x-hidden max-w-md mx-auto shadow-2xl relative">
 
 		<!-- Boarding Pass Header -->
 		<header class="bg-navy text-white pt-20 pb-32 px-4 relative overflow-hidden rounded-b-[50px]">
@@ -376,7 +377,7 @@
 
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 	<script>
-		AOS.init();
+		// AOS.init(); // Moved to open trigger
 
 		// Cover Logic
 		const cover = document.getElementById('cover');
@@ -396,7 +397,7 @@
 			setTimeout(() => {
 				cover.style.display = 'none';
 				main.style.display = 'block';
-				AOS.refresh();
+				AOS.init(); // Init AOS after visible
 			}, 800);
 		});
 
