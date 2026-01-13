@@ -85,6 +85,22 @@ class TemplateSeeder extends Seeder
         'description' => 'High-energy sports broadcast theme. Bold fonts, scoreboards, and competitive vibes.',
         'is_active' => true,
       ],
+      [
+        'name' => 'Social Scroll',
+        'slug' => 'social-scroll',
+        'view_path' => 'frontend.templates.v10',
+        'thumbnail' => 'https://via.placeholder.com/300x200?text=Social',
+        'description' => 'A trendy social media feed style invitation. Perfect for modern couples who love sharing moments.',
+        'is_active' => true,
+      ],
+      [
+        'name' => 'Pirate King Adventure',
+        'slug' => 'pirate-king',
+        'view_path' => 'frontend.templates.v11',
+        'thumbnail' => 'https://via.placeholder.com/300x200?text=Pirate',
+        'description' => 'A Wanted Poster style invitation for the ultimate adventure of love.',
+        'is_active' => true,
+      ],
     ];
 
     foreach ($templates as $template) {

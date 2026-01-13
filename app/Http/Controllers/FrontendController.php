@@ -53,29 +53,29 @@ class FrontendController extends Controller
 
     // Mock Wedding Details
     $event->weddingEvent = (object) [
-      'groom_name' => 'Romeo Montague',
-      'bride_name' => 'Juliet Capulet',
-      'groom_parent' => 'Mr. & Mrs. Montague',
-      'bride_parent' => 'Mr. & Mrs. Capulet',
+      'groom_name' => 'Monkey D. Luffy',
+      'bride_name' => 'Boa Hancock',
+      'groom_parent' => 'Monkey D. Dragon',
+      'bride_parent' => 'Unknown',
       'groom_photo' => asset('image/couple/grooms.jpg'),
-      'bride_photo' => asset('image/couple/brides.jpg'),
-      'groom_instagram' => 'romeo_montague',
-      'bride_instagram' => 'juliet_capulet',
+      'bride_photo' => asset('image/couple/grooms.jpg'),
+      'groom_instagram' => 'luffy_pirateking',
+      'bride_instagram' => 'hancock_empress',
     ];
 
     // Mock Locations
     $event->eventLocations = collect([
       (object) [
-        'name' => 'St. Peter\'s Basilica',
-        'address' => 'Vatican City',
-        'location_type' => 'akad',
+        'name' => 'Thousand Sunny Deck',
+        'address' => 'New World Sea',
+        'location_type' => 'ceremony',
         'event_time' => '10:00:00',
         'google_maps_url' => 'https://maps.google.com'
       ],
       (object) [
-        'name' => 'Grand Ballroom',
-        'address' => 'Plaza Hotel, New York',
-        'location_type' => 'resepsi',
+        'name' => 'Amazon Lily Palace',
+        'address' => 'Calm Belt',
+        'location_type' => 'reception',
         'event_time' => '19:00:00',
         'google_maps_url' => 'https://maps.google.com'
       ]
@@ -83,18 +83,18 @@ class FrontendController extends Controller
 
     // Mock Love Story
     $event->eventJourneys = collect([
-      (object) ['journey_date' => now()->subYears(5), 'title' => 'First Meeting', 'description' => 'We met at a coffee shop in downtown Verona.'],
-      (object) ['journey_date' => now()->subYears(3), 'title' => 'First Date', 'description' => 'Our first official date was a walk in the park.'],
-      (object) ['journey_date' => now()->subYear(), 'title' => 'She Said Yes', 'description' => 'Proposed under the stars exactly where we met.']
+      (object) ['journey_date' => now()->subYears(2), 'title' => 'First Meeting', 'description' => 'Luffy fell from the sky into her bathhouse.'],
+      (object) ['journey_date' => now()->subYears(1), 'title' => 'Marineford', 'description' => 'She gave him the key to his brother\'s cuffs.'],
+      (object) ['journey_date' => now()->subYear(), 'title' => 'Proposal', 'description' => 'She practiced cooking meat for him every day.']
     ]);
 
     // Mock Gallery
     $event->eventGalleries = collect([
-      (object) ['image_path' => asset('image/gallery/1.jpg'), 'caption' => 'Gallery 1'],
-      (object) ['image_path' => asset('image/gallery/2.jpg'), 'caption' => 'Gallery 2'],
-      (object) ['image_path' => asset('image/gallery/3.jpg'), 'caption' => 'Gallery 3'],
-      (object) ['image_path' => asset('image/gallery/4.jpg'), 'caption' => 'Gallery 4'],
-      (object) ['image_path' => asset('image/gallery/5.jpg'), 'caption' => 'Gallery 5']
+      (object) ['image_path' => 'https://static.wikia.nocookie.net/onepiece/images/a/a6/Thousand_Sunny_Infobox.png', 'caption' => 'Our Ship'],
+      (object) ['image_path' => 'https://static.wikia.nocookie.net/onepiece/images/6/6f/Going_Merry_Infobox.png', 'caption' => 'Merry Go'],
+      (object) ['image_path' => 'https://static.wikia.nocookie.net/onepiece/images/e/e6/Amazon_Lily_Infobox.png', 'caption' => 'Home'],
+      (object) ['image_path' => 'https://static.wikia.nocookie.net/onepiece/images/6/6d/Whole_Cake_Chateau_Infobox.png', 'caption' => 'Cake?'],
+      (object) ['image_path' => 'https://static.wikia.nocookie.net/onepiece/images/5/52/Baratie_Infobox.png', 'caption' => 'Food!']
     ]);
 
     // Mock Angpao/Gift
