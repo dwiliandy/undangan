@@ -26,13 +26,16 @@ class AuthController extends Controller
     if (Auth::attempt($credentials)) {
       $request->session()->regenerate();
 
-      // Redirect admin to admin dashboard if they accidentally login here, or handle mixed roles.
-      // For now, assuming distinct login pages, we can check role if strictly separate.
-      if (auth()->user()->role === 'admin') {
-        return redirect()->route('admin.dashboard');
+      $role = auth()->user()->role;
+
+      if ($role === 'admin') {
+        return redirect()->intended(route('admin.dashboard'));
+      } elseif ($role === 'user') {
+        return redirect()->intended(route('user.dashboard'));
       }
 
-      return redirect()->intended(route('user.dashboard'));
+      // Default fallback
+      return redirect()->intended('/');
     }
 
     return back()->withErrors([

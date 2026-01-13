@@ -27,7 +27,7 @@ class InvitationController extends Controller
     return view('user.invitations.create', compact('event'));
   }
 
-  public function store(Request $request, Event $event)
+  public function  store(Request $request, Event $event)
   {
     if ($event->user_id !== auth()->id()) {
       abort(403);
@@ -35,6 +35,7 @@ class InvitationController extends Controller
 
     $request->validate([
       'guest_name' => 'required|string|max:255',
+      'phone_number' => 'nullable|string|max:20',
       'guest_address' => 'nullable|string|max:255',
     ]);
 
@@ -50,6 +51,7 @@ class InvitationController extends Controller
     $invitation = new Invitation();
     $invitation->event_id = $event->id;
     $invitation->guest_name = $request->guest_name;
+    $invitation->phone_number = $request->phone_number;
     $invitation->guest_address = $request->guest_address;
     $invitation->slug = $slug;
     $invitation->save();
@@ -73,11 +75,11 @@ class InvitationController extends Controller
 
     $request->validate([
       'guest_name' => 'required|string|max:255',
+      'phone_number' => 'nullable|string|max:20',
       'guest_address' => 'nullable|string|max:255',
     ]);
 
-    // If name changes, we might want to update slug, but usually better to keep slug stable or ask user.
-    // For simplicity, let's update slug if name changes to keep it consistent, ensuring uniqueness.
+    // If name changes, update slug (optional but good for consistency)
     if ($invitation->guest_name !== $request->guest_name) {
       $slug = Str::slug($request->guest_name);
       $count = 1;
@@ -89,6 +91,7 @@ class InvitationController extends Controller
     }
 
     $invitation->guest_name = $request->guest_name;
+    $invitation->phone_number = $request->phone_number;
     $invitation->guest_address = $request->guest_address;
     $invitation->save();
 
@@ -102,5 +105,23 @@ class InvitationController extends Controller
     }
     $invitation->delete();
     return redirect()->route('user.events.invitations.index', $event->id)->with('success', 'Guest removed successfully!');
+  }
+
+  public function import(Request $request, Event $event)
+  {
+    if ($event->user_id !== auth()->id()) {
+      abort(403);
+    }
+
+    $request->validate([
+      'file' => 'required|file|mimes:xlsx,xls,csv,txt|max:2048',
+    ]);
+
+    try {
+      \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\InvitationImport($event->id), $request->file('file'));
+      return redirect()->back()->with('success', 'Guests imported successfully!');
+    } catch (\Exception $e) {
+      return redirect()->back()->withErrors(['file' => 'Error importing file: ' . $e->getMessage()]);
+    }
   }
 }

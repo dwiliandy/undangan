@@ -9,6 +9,16 @@ class Event extends Model
 {
   /** @use HasFactory<\Database\Factories\EventFactory> */
   use HasFactory;
+
+  protected $fillable = [
+    'user_id',
+    'event_template_id',
+    'title',
+    'slug',
+    'event_date',
+    'whatsapp_message',
+    'is_active',
+  ];
   public function invitations()
   {
     return $this->hasMany(Invitation::class);

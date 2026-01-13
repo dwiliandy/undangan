@@ -63,6 +63,12 @@
 								</td>
 								<td class="text-end pe-3">
 									<div class="d-flex justify-content-end gap-2">
+										{{-- Manage Guests Button --}}
+										<a href="{{ route('user.events.invitations.index', $event->id) }}"
+											class="btn btn-sm btn-info text-white d-flex align-items-center gap-2 px-3">
+											<i class="bi bi-people-fill"></i> Guests
+										</a>
+
 										{{-- Main Manage Button --}}
 										<a href="{{ route('user.events.manage', $event->id) }}"
 											class="btn btn-sm btn-primary d-flex align-items-center gap-2 px-3">
@@ -76,7 +82,7 @@
 											@method('DELETE')
 											<button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"
 												data-bs-toggle="tooltip" title="Delete Event">
-												<i class="bi bi-trash-fill"></i>
+												<i class="bi bi-trash-fill"></i> Delete
 											</button>
 										</form>
 									</div>

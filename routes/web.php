@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('events', \App\Http\Controllers\User\EventController::class)->names('user.events');
   Route::get('/events/{event}/wedding-details', [\App\Http\Controllers\User\WeddingEventController::class, 'edit'])->name('user.events.wedding-details.edit');
   Route::post('/events/{event}/wedding-details', [\App\Http\Controllers\User\WeddingEventController::class, 'update'])->name('user.events.wedding-details.update');
+  Route::post('/events/{event}/invitations/import', [\App\Http\Controllers\User\InvitationController::class, 'import'])->name('user.events.invitations.import');
   Route::resource('events.invitations', \App\Http\Controllers\User\InvitationController::class)->names('user.events.invitations');
 
   // Manage Event Content Dashboard
@@ -38,9 +39,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
-  Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-  Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-  Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+  // Admin Login/Logout now handled by Global Auth
 
   Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

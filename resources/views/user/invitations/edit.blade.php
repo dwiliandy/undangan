@@ -3,15 +3,20 @@
 @section('title', 'Edit Guest')
 
 @section('content')
-	<div class="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
-		<div class="flex justify-between items-center mb-6">
-			<h2 class="text-2xl font-semibold text-gray-800">Edit Guest</h2>
-			<a href="{{ route('user.events.invitations.index', $event->id) }}" class="text-gray-600 hover:text-gray-900">Back</a>
+	<div class="container-fluid">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<div>
+				<h2 class="h3 text-gray-800 fw-bold">Edit Guest</h2>
+				<p class="text-muted small">Update guest details.</p>
+			</div>
+			<a href="{{ route('user.events.invitations.index', $event->id) }}" class="btn btn-outline-secondary">
+				<i class="bi bi-arrow-left me-2"></i>Back to List
+			</a>
 		</div>
 
 		@if ($errors->any())
-			<div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
-				<ul class="list-disc ml-4">
+			<div class="alert alert-danger shadow-sm border-0 border-start border-5 border-danger" role="alert">
+				<ul class="mb-0 ps-3">
 					@foreach ($errors->all() as $error)
 						<li>{{ $error }}</li>
 					@endforeach
@@ -19,31 +24,41 @@
 			</div>
 		@endif
 
-		<form action="{{ route('user.events.invitations.update', [$event->id, $invitation->id]) }}" method="POST">
-			@csrf
-			@method('PUT')
-
-			<div class="mb-4">
-				<label class="block text-gray-700 text-sm font-bold mb-2" for="guest_name">Guest Name</label>
-				<input
-					class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					id="guest_name" type="text" name="guest_name" value="{{ old('guest_name', $invitation->guest_name) }}" required>
+		<div class="card shadow-sm border-0 rounded-3">
+			<div class="card-header bg-transparent border-bottom py-3">
+				<h5 class="card-title mb-0 fw-semibold text-primary">Guest Information</h5>
 			</div>
+			<div class="card-body p-4">
+				<form action="{{ route('user.events.invitations.update', [$event->id, $invitation->id]) }}" method="POST">
+					@csrf
+					@method('PUT')
 
-			<div class="mb-6">
-				<label class="block text-gray-700 text-sm font-bold mb-2" for="guest_address">Guest Address/Note (Optional)</label>
-				<textarea
-				 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-				 id="guest_address" name="guest_address">{{ old('guest_address', $invitation->guest_address) }}</textarea>
-			</div>
+					<div class="mb-4">
+						<label for="guest_name" class="form-label fw-semibold">Guest Name</label>
+						<input type="text" class="form-control" id="guest_name" name="guest_name"
+							value="{{ old('guest_name', $invitation->guest_name) }}" placeholder="Mr. John Doe" required>
+					</div>
 
-			<div class="flex items-center justify-end">
-				<button
-					class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-					type="submit">
-					Update Guest
-				</button>
+					<div class="mb-4">
+						<label for="phone_number" class="form-label fw-semibold">Phone Number (WhatsApp)</label>
+						<input type="text" class="form-control" id="phone_number" name="phone_number"
+							value="{{ old('phone_number', $invitation->phone_number) }}" placeholder="08123456789">
+						<div class="form-text">Used for sending invitation link via WhatsApp.</div>
+					</div>
+
+					<div class="mb-4">
+						<label for="guest_address" class="form-label fw-semibold">Guest Address / Note</label>
+						<textarea class="form-control" id="guest_address" name="guest_address" rows="3"
+						 placeholder="e.g. Family from Jakarta">{{ old('guest_address', $invitation->guest_address) }}</textarea>
+					</div>
+
+					<div class="d-flex justify-content-end">
+						<button type="submit" class="btn btn-primary px-4 fw-bold">
+							<i class="bi bi-check-lg me-2"></i> Update Guest
+						</button>
+					</div>
+				</form>
 			</div>
-		</form>
+		</div>
 	</div>
 @endsection

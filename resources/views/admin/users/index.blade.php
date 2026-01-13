@@ -4,63 +4,81 @@
 
 @section('content')
 	<div class="container-fluid">
-		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-			<h1 class="h2">Users</h1>
-			<div class="btn-toolbar mb-2 mb-md-0">
-				<a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-primary">
-					<i class="bi bi-plus-lg"></i> Add New User
-				</a>
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<div>
+				<h2 class="h3 text-gray-800 fw-bold">Users</h2>
+				<p class="text-muted small">Manage user accounts and roles.</p>
 			</div>
+			<a href="{{ route('admin.users.create') }}" class="btn btn-primary shadow-sm">
+				<i class="bi bi-plus-lg me-2"></i>Add New User
+			</a>
 		</div>
 
 		@if (session('success'))
-			<div class="alert alert-success alert-dismissible fade show" role="alert">
-				{{ session('success') }}
+			<div class="alert alert-success alert-dismissible fade show shadow-sm border-0 border-start border-5 border-success"
+				role="alert">
+				<div class="d-flex align-items-center">
+					<i class="bi bi-check-circle-fill fs-4 me-3 text-success"></i>
+					<div>{{ session('success') }}</div>
+				</div>
 				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			</div>
 		@endif
 
 		@if (session('error'))
-			<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				{{ session('error') }}
+			<div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 border-start border-5 border-danger"
+				role="alert">
+				<div class="d-flex align-items-center">
+					<i class="bi bi-exclamation-circle-fill fs-4 me-3 text-danger"></i>
+					<div>{{ session('error') }}</div>
+				</div>
 				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			</div>
 		@endif
 
-		<div class="card shadow-sm">
-			<div class="card-body">
+		<div class="card shadow-sm border-0 rounded-3">
+			<div class="card-body p-4">
 				<div class="table-responsive">
-					<table id="usersTable" class="table table-striped table-hover align-middle" style="width:100%">
+					<table id="usersTable" class="table table-hover align-middle datatable" style="width:100%">
 						<thead class="table-light">
 							<tr>
-								<th>Name</th>
-								<th>Email</th>
-								<th>Role</th>
-								<th>Created At</th>
-								<th class="text-end">Actions</th>
+								<th class="border-0 rounded-start">Name</th>
+								<th class="border-0">Email</th>
+								<th class="border-0">Role</th>
+								<th class="border-0">Created At</th>
+								<th class="border-0 rounded-end text-end">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($users as $user)
 								<tr>
-									<td class="fw-bold">{{ $user->name }}</td>
-									<td>{{ $user->email }}</td>
+									<td class="fw-medium text-dark">{{ $user->name }}</td>
+									<td class="text-muted">{{ $user->email }}</td>
 									<td>
 										@if ($user->role === 'admin')
-											<span class="badge bg-danger rounded-pill">Admin</span>
+											<span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 rounded-pill">
+												<i class="bi bi-shield-lock-fill me-1"></i> Admin
+											</span>
 										@else
-											<span class="badge bg-primary rounded-pill">User</span>
+											<span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill">
+												<i class="bi bi-person-fill me-1"></i> User
+											</span>
 										@endif
 									</td>
-									<td>{{ $user->created_at->format('d M Y') }}</td>
+									<td class="text-secondary small">{{ $user->created_at->format('d M Y') }}</td>
 									<td class="text-end">
-										<div class="btn-group btn-group-sm">
-											<a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-outline-secondary">Edit</a>
+										<div class="btn-group">
+											<a href="{{ route('admin.users.edit', $user->id) }}"
+												class="btn btn-sm btn-outline-primary border-0 rounded-start" title="Edit">
+												<i class="bi bi-pencil-square"></i>
+											</a>
 											<form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline"
-												onsubmit="return confirm('Are you sure?');">
+												onsubmit="return confirm('Are you sure you want to delete this user?');">
 												@csrf
 												@method('DELETE')
-												<button type="submit" class="btn btn-outline-danger">Delete</button>
+												<button type="submit" class="btn btn-sm btn-outline-danger border-0 rounded-end" title="Delete">
+													<i class="bi bi-trash"></i>
+												</button>
 											</form>
 										</div>
 									</td>
@@ -72,19 +90,4 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- DataTables CSS/JS included in layout, initialize here -->
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-	<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-
-	<script>
-		$(document).ready(function() {
-			$('#usersTable').DataTable({
-				"order": [
-					[3, "desc"]
-				] // Sort by created_at (index 3) desc
-			});
-		});
-	</script>
 @endsection

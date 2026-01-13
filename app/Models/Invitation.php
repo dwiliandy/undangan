@@ -9,6 +9,7 @@ class Invitation extends Model
   protected $fillable = [
     'event_id',
     'guest_name',
+    'phone_number',
     'guest_address',
     'slug',
     'is_opened',

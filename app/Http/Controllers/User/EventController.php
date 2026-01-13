@@ -29,6 +29,7 @@ class EventController extends Controller
       'slug' => 'required|string|max:255|unique:events,slug',
       'event_date' => 'required|date',
       'event_template_id' => 'required|exists:event_templates,id',
+      'whatsapp_message' => 'nullable|string',
     ]);
 
     $event = new Event();
@@ -37,6 +38,7 @@ class EventController extends Controller
     $event->slug = Str::slug($request->slug);
     $event->event_date = $request->event_date;
     $event->event_template_id = $request->event_template_id;
+    $event->whatsapp_message = $request->whatsapp_message;
     $event->save();
 
     return redirect()->route('user.events.index')->with('success', 'Event created successfully!');
@@ -71,12 +73,14 @@ class EventController extends Controller
       'slug' => 'required|string|max:255|unique:events,slug,' . $event->id,
       'event_date' => 'required|date',
       'event_template_id' => 'required|exists:event_templates,id',
+      'whatsapp_message' => 'nullable|string',
     ]);
 
     $event->title = $request->title;
     $event->slug = Str::slug($request->slug);
     $event->event_date = $request->event_date;
     $event->event_template_id = $request->event_template_id;
+    $event->whatsapp_message = $request->whatsapp_message;
     $event->save();
 
     return redirect()->route('user.events.index')->with('success', 'Event updated successfully!');
