@@ -40,7 +40,7 @@
 		</a>
 		<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
 			<li>
-				<form method="POST" action="{{ route('admin.logout') }}">
+				<form method="POST" action="{{ route('logout') }}">
 					@csrf
 					<button type="submit" class="dropdown-item">Sign out</button>
 				</form>

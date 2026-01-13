@@ -1,0 +1,36 @@
+<?php
+
+return [
+  'welcome' => 'Selamat Datang, :name!',
+  'dashboard' => 'Dasbor',
+  'manage_events' => 'Kelola acara dan undangan Anda di sini.',
+  'create_new_event' => 'Buat Acara Baru',
+  'start_creating' => 'Mulai buat undangan pernikahan atau ulang tahun Anda.',
+  'create_now' => 'Buat Sekarang',
+  'my_events' => 'Acara Saya',
+  'active_events' => 'Acara Aktif',
+  'total_guests' => 'Total Tamu',
+  'across_all_events' => 'Di semua acara',
+  'logout' => 'Keluar',
+  'language' => 'Bahasa',
+  'sidebar' => [
+    'dashboard' => 'Dasbor',
+    'my_events' => 'Acara Saya',
+  ],
+  'event' => [
+    'create_title' => 'Buat Acara Baru',
+    'create_subtitle' => 'Mulai rencanakan hari besar Anda.',
+    'back_to_list' => 'Kembali',
+    'details_title' => 'Detail Acara',
+    'input_title' => 'Judul Acara',
+    'input_slug' => 'URL Undangan (Slug)',
+    'input_date' => 'Tanggal Acara',
+    'config_title' => 'Konfigurasi',
+    'select_template' => 'Pilih Tema',
+    'wa_template' => 'Template WhatsApp',
+    'create_btn' => 'Buat Acara',
+    'slug_help' => 'Gunakan teks unik dengan tanda penghubung (-) untuk link undangan Anda.',
+    'template_help' => 'Pilih',
+    'wa_help' => 'Klik tombol di atas untuk menyisipkan variabel.',
+  ],
+];

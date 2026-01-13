@@ -38,6 +38,8 @@ class UserController extends Controller
       'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
       'password' => ['required', 'confirmed', Rules\Password::defaults()],
       'role' => ['required', Rule::in(['admin', 'user'])],
+      'status' => ['required', Rule::in(['pending', 'active', 'rejected'])],
+      'event_quota' => ['required', 'integer', 'min:0'],
     ]);
 
     User::create([
@@ -45,6 +47,8 @@ class UserController extends Controller
       'email' => $request->email,
       'password' => Hash::make($request->password),
       'role' => $request->role,
+      'status' => $request->status,
+      'event_quota' => $request->event_quota,
     ]);
 
     return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
@@ -63,22 +67,38 @@ class UserController extends Controller
    */
   public function update(Request $request, User $user)
   {
+    // Check for quick approve to skip full validation of other fields if needed
     $request->validate([
-      'name' => ['required', 'string', 'max:255'],
-      'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-      'role' => ['required', Rule::in(['admin', 'user'])],
-      'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+      'name' => ['sometimes', 'required', 'string', 'max:255'],
+      'email' => ['sometimes', 'required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+      'phone_number' => ['sometimes', 'required', 'string', 'max:20'],
+      'role' => ['sometimes', 'required', Rule::in(['admin', 'user'])],
+      'status' => ['required', Rule::in(['pending', 'active', 'rejected'])],
+      'event_quota' => ['required', 'integer', 'min:0'],
+      // Password validation removed as admin cannot change password
     ]);
 
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->role = $request->role;
+    $previousStatus = $user->status;
 
-    if ($request->filled('password')) {
-      $user->password = Hash::make($request->password);
-    }
+    if ($request->has('name')) $user->name = $request->name;
+    if ($request->has('email')) $user->email = $request->email;
+    if ($request->has('phone_number')) $user->phone_number = $request->phone_number;
+    if ($request->has('role')) $user->role = $request->role;
+    $user->status = $request->status;
+    $user->event_quota = $request->event_quota;
+
+    // Password update logic removed
 
     $user->save();
+
+    // Send WhatsApp Notification if approved
+    if ($previousStatus === 'pending' && $user->status === 'active') {
+      \App\Services\WhatsAppService::sendMessage($user->phone_number, "Selamat! Akun Anda telah disetujui. Silakan login.");
+    }
+
+    if ($request->has('quick_approve')) {
+      return redirect()->back()->with('success', 'User approved successfully.');
+    }
 
     return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
   }

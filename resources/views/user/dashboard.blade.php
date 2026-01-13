@@ -1,12 +1,12 @@
 @extends('layouts.user')
 
-@section('title', 'My Dashboard')
+@section('title', __('user.dashboard'))
 
 @section('content')
 	<div class="card shadow-sm">
 		<div class="card-body">
-			<h2 class="card-title h4 mb-4">Welcome, {{ auth()->user()->name }}!</h2>
-			<p class="card-text text-muted mb-4">Manage your events and invitations here.</p>
+			<h2 class="card-title h4 mb-4">{{ __('user.welcome', ['name' => auth()->user()->name]) }}</h2>
+			<p class="card-text text-muted mb-4">{{ __('user.manage_events') }}</p>
 
 			<div class="row g-4">
 				<!-- Create Event Card -->
@@ -22,9 +22,9 @@
 										d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
 								</svg>
 							</div>
-							<h5 class="card-title text-primary">Create New Event</h5>
-							<p class="card-text small text-muted">Start creating your wedding or birthday invitation.</p>
-							<a href="{{ route('user.events.create') }}" class="btn btn-primary mt-auto">Create Now</a>
+							<h5 class="card-title text-primary">{{ __('user.create_new_event') }}</h5>
+							<p class="card-text small text-muted">{{ __('user.start_creating') }}</p>
+							<a href="{{ route('user.events.create') }}" class="btn btn-primary mt-auto">{{ __('user.create_now') }}</a>
 						</div>
 					</div>
 				</div>
@@ -33,9 +33,9 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="card h-100">
 						<div class="card-body">
-							<h5 class="card-title text-muted">My Events</h5>
+							<h5 class="card-title text-muted">{{ __('user.my_events') }}</h5>
 							<p class="display-6 fw-bold text-dark">0</p>
-							<p class="card-text small text-muted">Active Events</p>
+							<p class="card-text small text-muted">{{ __('user.active_events') }}</p>
 						</div>
 					</div>
 				</div>
@@ -44,9 +44,9 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="card h-100">
 						<div class="card-body">
-							<h5 class="card-title text-muted">Total Guests</h5>
+							<h5 class="card-title text-muted">{{ __('user.total_guests') }}</h5>
 							<p class="display-6 fw-bold text-dark">0</p>
-							<p class="card-text small text-muted">Across all events</p>
+							<p class="card-text small text-muted">{{ __('user.across_all_events') }}</p>
 						</div>
 					</div>
 				</div>

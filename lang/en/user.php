@@ -1,0 +1,36 @@
+<?php
+
+return [
+  'welcome' => 'Welcome, :name!',
+  'dashboard' => 'Dashboard',
+  'manage_events' => 'Manage your events and invitations here.',
+  'create_new_event' => 'Create New Event',
+  'start_creating' => 'Start creating your wedding or birthday invitation.',
+  'create_now' => 'Create Now',
+  'my_events' => 'My Events',
+  'active_events' => 'Active Events',
+  'total_guests' => 'Total Guests',
+  'across_all_events' => 'Across all events',
+  'logout' => 'Logout',
+  'language' => 'Language',
+  'sidebar' => [
+    'dashboard' => 'Dashboard',
+    'my_events' => 'My Events',
+  ],
+  'event' => [
+    'create_title' => 'Create New Event',
+    'create_subtitle' => 'Start planning your big day.',
+    'back_to_list' => 'Back to List',
+    'details_title' => 'Event Details',
+    'input_title' => 'Event Title',
+    'input_slug' => 'Event URL Slug',
+    'input_date' => 'Event Date',
+    'config_title' => 'Configuration',
+    'select_template' => 'Select Template',
+    'wa_template' => 'WhatsApp Template',
+    'create_btn' => 'Create Event',
+    'slug_help' => 'Use a unique dash-separated text for your invitation link.',
+    'template_help' => 'Select',
+    'wa_help' => 'Click buttons above to insert placeholders.',
+  ],
+];

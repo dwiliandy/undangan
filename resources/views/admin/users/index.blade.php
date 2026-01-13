@@ -44,7 +44,10 @@
 							<tr>
 								<th class="border-0 rounded-start">Name</th>
 								<th class="border-0">Email</th>
+								<th class="border-0">Phone</th>
 								<th class="border-0">Role</th>
+								<th class="border-0">Status</th>
+								<th class="border-0">Quota</th>
 								<th class="border-0">Created At</th>
 								<th class="border-0 rounded-end text-end">Actions</th>
 							</tr>
@@ -54,6 +57,7 @@
 								<tr>
 									<td class="fw-medium text-dark">{{ $user->name }}</td>
 									<td class="text-muted">{{ $user->email }}</td>
+									<td class="text-muted">{{ $user->phone_number ?? '-' }}</td>
 									<td>
 										@if ($user->role === 'admin')
 											<span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 rounded-pill">
@@ -65,6 +69,26 @@
 											</span>
 										@endif
 									</td>
+									<td>
+										@if ($user->status === 'active')
+											<span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">
+												Active
+											</span>
+										@elseif ($user->status === 'pending')
+											<span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 rounded-pill">
+												Pending
+											</span>
+										@else
+											<span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 rounded-pill">
+												Rejected
+											</span>
+										@endif
+									</td>
+									<td>
+										<span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-3 py-2 rounded-pill">
+											{{ $user->event_quota }}
+										</span>
+									</td>
 									<td class="text-secondary small">{{ $user->created_at->format('d M Y') }}</td>
 									<td class="text-end">
 										<div class="btn-group">
@@ -72,6 +96,18 @@
 												class="btn btn-sm btn-outline-primary border-0 rounded-start" title="Edit">
 												<i class="bi bi-pencil-square"></i>
 											</a>
+											@if ($user->status === 'pending')
+												<form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="d-inline">
+													@csrf
+													@method('PUT')
+													<input type="hidden" name="status" value="active">
+													<input type="hidden" name="event_quota" value="1">
+													<input type="hidden" name="quick_approve" value="1">
+													<button type="submit" class="btn btn-sm btn-outline-success border-0" title="Approve">
+														<i class="bi bi-check-lg"></i>
+													</button>
+												</form>
+											@endif
 											<form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline"
 												onsubmit="return confirm('Are you sure you want to delete this user?');">
 												@csrf

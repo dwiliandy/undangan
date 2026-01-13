@@ -5,13 +5,13 @@
 			<li class="mb-2">
 				<a href="{{ route('user.dashboard') }}"
 					class="text-white text-decoration-none d-block p-2 rounded {{ request()->routeIs('user.dashboard') ? 'bg-primary' : 'hover-bg-secondary' }}">
-					Dashboard
+					{{ __('user.sidebar.dashboard') }}
 				</a>
 			</li>
 			<li class="mb-2">
 				<a href="{{ route('user.events.index') }}"
 					class="text-white text-decoration-none d-block p-2 rounded {{ request()->routeIs('user.events.*') ? 'bg-primary' : 'hover-bg-secondary' }}">
-					My Events
+					{{ __('user.sidebar.my_events') }}
 				</a>
 			</li>
 		</ul>

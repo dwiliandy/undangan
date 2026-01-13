@@ -53,6 +53,12 @@
 							</div>
 
 							<div class="mb-4">
+								<label for="phone_number" class="form-label fw-semibold">Phone/WA Number</label>
+								<input type="text" class="form-control" id="phone_number" name="phone_number"
+									value="{{ old('phone_number', $user->phone_number) }}" required>
+							</div>
+
+							<div class="mb-4">
 								<label for="role" class="form-label fw-semibold">Role</label>
 								<select class="form-select" id="role" name="role" required>
 									<option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User</option>
@@ -60,21 +66,23 @@
 								</select>
 							</div>
 
-							<hr class="my-4">
-							<h6 class="fw-bold mb-3 text-muted">Change Password <span class="fw-normal small">(Optional)</span></h6>
-
 							<div class="row g-3">
-								<div class="col-md-6 mb-3">
-									<label for="password" class="form-label fw-semibold">New Password</label>
-									<input type="password" class="form-control" id="password" name="password" placeholder="Leave blank to keep">
+								<div class="col-md-6 mb-4">
+									<label for="status" class="form-label fw-semibold">Status</label>
+									<select class="form-select" id="status" name="status" required>
+										<option value="pending" {{ old('status', $user->status) == 'pending' ? 'selected' : '' }}>Pending</option>
+										<option value="active" {{ old('status', $user->status) == 'active' ? 'selected' : '' }}>Active</option>
+										<option value="rejected" {{ old('status', $user->status) == 'rejected' ? 'selected' : '' }}>Rejected</option>
+									</select>
 								</div>
-
-								<div class="col-md-6 mb-3">
-									<label for="password_confirmation" class="form-label fw-semibold">Confirm Password</label>
-									<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+								<div class="col-md-6 mb-4">
+									<label for="event_quota" class="form-label fw-semibold">Event Quota</label>
+									<input type="number" class="form-control" id="event_quota" name="event_quota"
+										value="{{ old('event_quota', $user->event_quota) }}" min="0" required>
 								</div>
 							</div>
-							<div class="form-text mt-0 mb-3">Only fill these fields if you want to change the user's password.</div>
+
+              {{-- Password change disabled for admin --}}
 
 							<div class="d-flex justify-content-end mt-2">
 								<button type="submit" class="btn btn-primary px-4 fw-bold shadow-sm">

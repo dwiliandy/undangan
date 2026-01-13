@@ -51,12 +51,34 @@
 							</div>
 
 							<div class="mb-4">
+								<label for="phone_number" class="form-label fw-semibold">Phone/WA Number</label>
+								<input type="text" class="form-control" id="phone_number" name="phone_number"
+									value="{{ old('phone_number') }}" placeholder="628..." required>
+							</div>
+
+							<div class="mb-4">
 								<label for="role" class="form-label fw-semibold">Role</label>
 								<select class="form-select" id="role" name="role" required>
 									<option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
 									<option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
 								</select>
 								<div class="form-text small">Admins have full access to the system.</div>
+							</div>
+
+							<div class="row g-3">
+								<div class="col-md-6 mb-4">
+									<label for="status" class="form-label fw-semibold">Status</label>
+									<select class="form-select" id="status" name="status" required>
+										<option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
+										<option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+										<option value="rejected" {{ old('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+									</select>
+								</div>
+								<div class="col-md-6 mb-4">
+									<label for="event_quota" class="form-label fw-semibold">Event Quota</label>
+									<input type="number" class="form-control" id="event_quota" name="event_quota"
+										value="{{ old('event_quota', 1) }}" min="0" required>
+								</div>
 							</div>
 
 							<hr class="my-4">

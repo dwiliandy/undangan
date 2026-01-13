@@ -12,8 +12,16 @@
 	<div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
 		<h2 class="text-3xl font-extrabold mb-6 text-center text-indigo-700">Welcome Back</h2>
 
+		@if (session('success'))
+			<div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+				<p class="font-bold">Info</p>
+				<p>{{ session('success') }}</p>
+			</div>
+		@endif
+
 		@if ($errors->any())
 			<div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+				<p class="font-bold">Error</p>
 				<p>{{ $errors->first() }}</p>
 			</div>
 		@endif

@@ -48,6 +48,11 @@
 								<input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
 							</div>
 							<div class="mb-3">
+								<label for="phone_number" class="form-label fw-bold">WhatsApp Number</label>
+								<input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="628123456789"
+									required>
+							</div>
+							<div class="mb-3">
 								<label for="password" class="form-label fw-bold">Password</label>
 								<input type="password" class="form-control" id="password" name="password" placeholder="********" required>
 							</div>

@@ -24,6 +24,11 @@ class EventController extends Controller
 
   public function store(Request $request)
   {
+    // Check Quota
+    $user = auth()->user();
+    if ($user->events()->count() >= $user->event_quota) {
+      return back()->withErrors(['quota' => 'You have reached your event creation quota. Please contact admin to upgrade.'])->withInput();
+    }
     $request->validate([
       'title' => 'required|string|max:255',
       'slug' => 'required|string|max:255|unique:events,slug',

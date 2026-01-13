@@ -23,19 +23,30 @@ class AuthController extends Controller
       'password' => ['required'],
     ]);
 
-    if (Auth::attempt($credentials)) {
-      $request->session()->regenerate();
+    if (Auth::validate($credentials)) {
+      $user = User::where('email', $request->email)->first();
 
-      $role = auth()->user()->role;
-
-      if ($role === 'admin') {
-        return redirect()->intended(route('admin.dashboard'));
-      } elseif ($role === 'user') {
-        return redirect()->intended(route('user.dashboard'));
+      // Status Check
+      if ($user->role === 'user') {
+        if ($user->status === 'pending') {
+          return back()->withErrors(['email' => 'Your account is pending approval.']);
+        } elseif ($user->status === 'rejected') {
+          return back()->withErrors(['email' => 'Your account has been rejected.']);
+        }
       }
 
-      // Default fallback
-      return redirect()->intended('/');
+      if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+        $role = auth()->user()->role;
+
+        if ($role === 'admin') {
+          return redirect()->intended(route('admin.dashboard'));
+        } elseif ($role === 'user') {
+          return redirect()->intended(route('user.dashboard'));
+        }
+
+        return redirect()->intended('/');
+      }
     }
 
     return back()->withErrors([
@@ -53,19 +64,21 @@ class AuthController extends Controller
     $request->validate([
       'name' => ['required', 'string', 'max:255'],
       'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+      'phone_number' => ['required', 'string', 'max:20'],
       'password' => ['required', 'confirmed', Rules\Password::defaults()],
     ]);
 
     $user = User::create([
       'name' => $request->name,
       'email' => $request->email,
+      'phone_number' => $request->phone_number,
       'password' => Hash::make($request->password),
       'role' => 'user',
     ]);
 
-    Auth::login($user);
+    // Auth::login($user);
 
-    return redirect(route('user.dashboard'));
+    return redirect()->route('login')->with('success', 'Registration successful! Your account is pending approval.');
   }
 
   public function logout(Request $request)

@@ -51,6 +51,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 // Public Routes (Must be last)
 Route::get('/preview/{templateSlug}', [\App\Http\Controllers\FrontendController::class, 'preview'])->name('frontend.preview');
+// Language Switch Route
+Route::get('/lang/{locale}', function ($locale) {
+  if (!in_array($locale, ['en', 'id'])) {
+    abort(400);
+  }
+  session(['locale' => $locale]);
+  return back();
+})->name('lang.switch');
+
 Route::get('/{eventSlug}', [\App\Http\Controllers\FrontendController::class, 'event'])->name('frontend.event');
 Route::get('/{eventSlug}/{invitationSlug}', [\App\Http\Controllers\FrontendController::class, 'invitation'])->name('frontend.invitation');
 Route::post('/{eventSlug}/{invitationSlug}', [\App\Http\Controllers\FrontendController::class, 'rsvp'])->name('frontend.rsvp');
