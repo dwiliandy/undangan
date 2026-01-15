@@ -298,10 +298,10 @@
 							<div class="grid grid-cols-2 gap-6">
 								<div>
 									<label class="block text-xs uppercase tracking-widest mb-2">Attendance</label>
-									<select name="attendance"
+									<select name="status"
 										class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black bg-transparent">
-										<option value="valid">Valid</option>
-										<option value="unable">Unable</option>
+										<option value="yes">Valid</option>
+										<option value="no">Unable</option>
 									</select>
 								</div>
 								<div>

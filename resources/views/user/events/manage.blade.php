@@ -13,13 +13,20 @@
 							href="#v-pills-general" role="tab" aria-controls="v-pills-general" aria-selected="true">
 							<i class="bi bi-gear-fill me-2"></i> General Settings
 						</a>
-						<a class="nav-link rounded-0 border-bottom p-3" id="v-pills-wedding-tab" data-bs-toggle="pill"
-							href="#v-pills-wedding" role="tab" aria-controls="v-pills-wedding" aria-selected="false">
-							<i class="bi bi-heart-fill me-2"></i> Wedding Info
-						</a>
+						@if ($event->category == 'wedding')
+							<a class="nav-link rounded-0 border-bottom p-3" id="v-pills-wedding-tab" data-bs-toggle="pill"
+								href="#v-pills-wedding" role="tab" aria-controls="v-pills-wedding" aria-selected="false">
+								<i class="bi bi-heart-fill me-2"></i> Wedding Info
+							</a>
+						@elseif ($event->category == 'birthday')
+							<a class="nav-link rounded-0 border-bottom p-3" id="v-pills-birthday-tab" data-bs-toggle="pill"
+								href="#v-pills-birthday" role="tab" aria-controls="v-pills-birthday" aria-selected="false">
+								<i class="bi bi-gift-fill me-2"></i> Birthday Info
+							</a>
+						@endif
 						<a class="nav-link rounded-0 border-bottom p-3" id="v-pills-journey-tab" data-bs-toggle="pill"
 							href="#v-pills-journey" role="tab" aria-controls="v-pills-journey" aria-selected="false">
-							<i class="bi bi-journal-album me-2"></i> Love Story / Journey
+							<i class="bi bi-journal-album me-2"></i> Story / Journey
 						</a>
 						<a class="nav-link rounded-0 border-bottom p-3" id="v-pills-gallery-tab" data-bs-toggle="pill"
 							href="#v-pills-gallery" role="tab" aria-controls="v-pills-gallery" aria-selected="false">
@@ -56,9 +63,16 @@
 				</div>
 
 				<!-- Wedding Info Tab -->
-				<div class="tab-pane fade" id="v-pills-wedding" role="tabpanel" aria-labelledby="v-pills-wedding-tab">
-					@include('user.events.tabs.wedding')
-				</div>
+				@if ($event->category == 'wedding')
+					<div class="tab-pane fade" id="v-pills-wedding" role="tabpanel" aria-labelledby="v-pills-wedding-tab">
+						@include('user.events.tabs.wedding')
+					</div>
+				@elseif ($event->category == 'birthday')
+					<!-- Birthday Info Tab -->
+					<div class="tab-pane fade" id="v-pills-birthday" role="tabpanel" aria-labelledby="v-pills-birthday-tab">
+						@include('user.events.tabs.birthday')
+					</div>
+				@endif
 
 				<!-- Journey Tab -->
 				<div class="tab-pane fade" id="v-pills-journey" role="tabpanel" aria-labelledby="v-pills-journey-tab">

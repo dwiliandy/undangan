@@ -16,10 +16,19 @@ class EventController extends Controller
     return view('user.events.index', compact('events'));
   }
 
-  public function create()
+  public function create(Request $request)
   {
-    $templates = EventTemplate::where('is_active', true)->get();
-    return view('user.events.create', compact('templates'));
+    $category = $request->query('category');
+
+    if (!$category || !in_array($category, ['wedding', 'birthday'])) {
+      return view('user.events.choose_category');
+    }
+
+    $templates = EventTemplate::where('is_active', true)
+      ->where('category', $category)
+      ->get();
+
+    return view('user.events.create', compact('templates', 'category'));
   }
 
   public function store(Request $request)
@@ -35,6 +44,7 @@ class EventController extends Controller
       'event_date' => 'required|date',
       'event_template_id' => 'required|exists:event_templates,id',
       'whatsapp_message' => 'nullable|string',
+      'category' => 'required|in:wedding,birthday',
     ]);
 
     $event = new Event();
@@ -44,7 +54,20 @@ class EventController extends Controller
     $event->event_date = $request->event_date;
     $event->event_template_id = $request->event_template_id;
     $event->whatsapp_message = $request->whatsapp_message;
+    $event->category = $request->category;
     $event->save();
+
+    // Initialize specific event details based on category
+    if ($request->category === 'wedding') {
+      \App\Models\WeddingEvent::create(['event_id' => $event->id]);
+    } elseif ($request->category === 'birthday') {
+      // Initialize BirthdayEvent with placeholders or defaults
+      \App\Models\BirthdayEvent::create([
+        'event_id' => $event->id,
+        'person_name' => 'Birthday Person',
+        'age' => 0
+      ]);
+    }
 
     return redirect()->route('user.events.index')->with('success', 'Event created successfully!');
   }

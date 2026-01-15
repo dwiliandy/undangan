@@ -263,7 +263,8 @@
 				<div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
 					<p class="text-lg font-serif">The Wedding Of</p>
 					<h2 class="text-4xl font-serif italic my-4">{{ $event->weddingEvent->groom_name }} <br> &
-						<br>{{ $event->weddingEvent->bride_name }}</h2>
+						<br>{{ $event->weddingEvent->bride_name }}
+					</h2>
 					<p class="text-sm font-light">{{ \Carbon\Carbon::parse($event->event_date)->format('l, d F Y') }}</p>
 				</div>
 				<img src="https://www.transparenttextures.com/patterns/clean-gray-paper.png"
@@ -453,10 +454,10 @@
 							class="w-full border border-gray-300 rounded p-2 text-sm bg-white focus:border-blue-500 focus:outline-none">
 					</div>
 					<div class="flex space-x-2">
-						<select name="attendance"
+						<select name="status"
 							class="w-1/2 border border-gray-300 rounded p-2 text-sm bg-white focus:border-blue-500 focus:outline-none">
-							<option value="valid">Attend</option>
-							<option value="unable">Unable</option>
+							<option value="yes">Attend</option>
+							<option value="no">Unable</option>
 						</select>
 						<select name="total_guest"
 							class="w-1/2 border border-gray-300 rounded p-2 text-sm bg-white focus:border-blue-500 focus:outline-none">

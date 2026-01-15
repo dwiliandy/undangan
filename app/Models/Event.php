@@ -15,6 +15,7 @@ class Event extends Model
     'event_template_id',
     'title',
     'slug',
+    'category',
     'event_date',
     'whatsapp_message',
     'is_active',
@@ -37,6 +38,11 @@ class Event extends Model
   public function weddingEvent()
   {
     return $this->hasOne(WeddingEvent::class);
+  }
+
+  public function birthdayEvent()
+  {
+    return $this->hasOne(BirthdayEvent::class);
   }
 
   public function eventJourneys()

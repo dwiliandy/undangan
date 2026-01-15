@@ -32,12 +32,14 @@
 
 		<form action="{{ route('user.events.store') }}" method="POST">
 			@csrf
+			<input type="hidden" name="category" value="{{ $category ?? 'wedding' }}">
 
 			<div class="row g-4">
 				<div class="col-lg-8">
 					<div class="card shadow-sm border-0 rounded-3">
 						<div class="card-header bg-transparent border-bottom py-3">
-							<h5 class="card-title mb-0 fw-semibold text-primary">{{ __('user.event.details_title') }}</h5>
+							<h5 class="card-title mb-0 fw-semibold text-primary">{{ ucfirst($category ?? 'Event') }}
+								{{ __('user.event.details_title') }}</h5>
 						</div>
 						<div class="card-body p-4">
 							<div class="mb-4">

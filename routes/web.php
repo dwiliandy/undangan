@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('events', \App\Http\Controllers\User\EventController::class)->names('user.events');
   Route::get('/events/{event}/wedding-details', [\App\Http\Controllers\User\WeddingEventController::class, 'edit'])->name('user.events.wedding-details.edit');
   Route::post('/events/{event}/wedding-details', [\App\Http\Controllers\User\WeddingEventController::class, 'update'])->name('user.events.wedding-details.update');
+  Route::post('/events/{event}/birthday-details', [\App\Http\Controllers\User\BirthdayEventController::class, 'update'])->name('user.events.birthday-details.update');
   Route::post('/events/{event}/invitations/import', [\App\Http\Controllers\User\InvitationController::class, 'import'])->name('user.events.invitations.import');
   Route::resource('events.invitations', \App\Http\Controllers\User\InvitationController::class)->names('user.events.invitations');
 

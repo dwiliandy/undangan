@@ -27,7 +27,7 @@ class InvitationController extends Controller
     return view('user.invitations.create', compact('event'));
   }
 
-  public function  store(Request $request, Event $event)
+  public function store(Request $request, Event $event)
   {
     if ($event->user_id !== auth()->id()) {
       abort(403);
@@ -39,13 +39,14 @@ class InvitationController extends Controller
       'guest_address' => 'nullable|string|max:255',
     ]);
 
-    // Generate a unique slug for the invitation
-    $slug = Str::slug($request->guest_name);
-    // Ensure uniqueness within the event
-    $count = 1;
+    // Generate a unique slug for the invitation: snakeCase(name) + random 5 chars
+    // e.g. john_doe_x7z9q
+    $baseSlug = Str::kebab($request->guest_name);
+    $slug = $baseSlug . '-' . Str::lower(Str::random(5));
+
+    // Ensure uniqueness within the event (just in case of collision)
     while ($event->invitations()->where('slug', $slug)->exists()) {
-      $slug = Str::slug($request->guest_name) . '-' . $count;
-      $count++;
+      $slug = $baseSlug . '_' . Str::lower(Str::random(5));
     }
 
     $invitation = new Invitation();
@@ -81,11 +82,11 @@ class InvitationController extends Controller
 
     // If name changes, update slug (optional but good for consistency)
     if ($invitation->guest_name !== $request->guest_name) {
-      $slug = Str::slug($request->guest_name);
-      $count = 1;
+      $baseSlug = Str::snake($request->guest_name);
+      $slug = $baseSlug . '_' . Str::lower(Str::random(5));
+
       while ($event->invitations()->where('slug', $slug)->where('id', '!=', $invitation->id)->exists()) {
-        $slug = Str::slug($request->guest_name) . '-' . $count;
-        $count++;
+        $slug = $baseSlug . '_' . Str::lower(Str::random(5));
       }
       $invitation->slug = $slug;
     }

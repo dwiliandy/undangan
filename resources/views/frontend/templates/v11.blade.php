@@ -451,9 +451,9 @@
 					class="w-full p-3 bg-[#f4e4bc] text-[#4a3b2a] font-bold border-2 border-[#ffd700] placeholder-[#8b4513]"
 					placeholder="Pirate Name">
 
-				<select name="attendance" class="w-full p-3 bg-[#f4e4bc] text-[#4a3b2a] font-bold border-2 border-[#ffd700]">
-					<option value="valid">I'll Board the Ship! (Attend)</option>
-					<option value="unable">Stranded on Island... (Unable)</option>
+				<select name="status" class="w-full p-3 bg-[#f4e4bc] text-[#4a3b2a] font-bold border-2 border-[#ffd700]">
+					<option value="yes">I'll Board the Ship! (Attend)</option>
+					<option value="no">Stranded on Island... (Unable)</option>
 				</select>
 
 				<select name="total_guest" class="w-full p-3 bg-[#f4e4bc] text-[#4a3b2a] font-bold border-2 border-[#ffd700]">

@@ -12,7 +12,7 @@ class FrontendController extends Controller
 {
   public function event($slug)
   {
-    $event = Event::with('template', 'weddingEvent', 'eventJourneys', 'eventLocations', 'eventGalleries', 'eventBanks')->where('slug', $slug)->where('is_active', true)->firstOrFail();
+    $event = Event::with('template', 'weddingEvent', 'birthdayEvent', 'eventJourneys', 'eventLocations', 'eventGalleries', 'eventBanks')->where('slug', $slug)->where('is_active', true)->firstOrFail();
 
     // Use the event's template view path, fallback to a default if missing logic
     $templateView = $event->template ? $event->template->view_path : 'frontend.templates.v1';
@@ -24,7 +24,7 @@ class FrontendController extends Controller
 
   public function invitation($eventSlug, $invitationSlug)
   {
-    $event = Event::with('template', 'weddingEvent', 'eventJourneys', 'eventLocations', 'eventGalleries', 'eventBanks')->where('slug', $eventSlug)->where('is_active', true)->firstOrFail();
+    $event = Event::with('template', 'weddingEvent', 'birthdayEvent', 'eventJourneys', 'eventLocations', 'eventGalleries', 'eventBanks')->where('slug', $eventSlug)->where('is_active', true)->firstOrFail();
     $invitation = $event->invitations()->where('slug', $invitationSlug)->firstOrFail();
 
     // Mark as opened if not already

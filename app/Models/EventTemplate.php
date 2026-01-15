@@ -9,6 +9,7 @@ class EventTemplate extends Model
   protected $fillable = [
     'name',
     'slug',
+    'category',
     'thumbnail',
     'preview_image',
     'view_path',
